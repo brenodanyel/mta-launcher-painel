@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Box, Container, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { ProductCard } from './product-card';
 import { Product } from '@/types';
