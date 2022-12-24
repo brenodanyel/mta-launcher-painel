@@ -7,7 +7,7 @@ import {
   Button,
   Link,
 } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation, matchPath } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { HamburguerMenu } from './hamburguer-menu';
@@ -27,6 +27,8 @@ export const pages = [
 ];
 
 export function Header() {
+  const { pathname } = useLocation();
+
   return (
     <AppBar position='sticky'>
       <Container maxWidth='xl'>
@@ -61,12 +63,15 @@ export function Header() {
               {pages.map((page) => (
                 <Link
                   key={page.href}
-                  sx={{ color: 'inherit', textDecoration: 'none' }}
+                  underline='none'
+                  sx={{ color: 'inherit' }}
                   component={RouterLink}
                   to={page.href}
                 >
                   <Button
-                    variant='text'
+                    variant={
+                      matchPath(page.href, pathname) ? 'outlined' : 'text'
+                    }
                     sx={{ color: 'inherit' }}
                     startIcon={page.icon}
                   >

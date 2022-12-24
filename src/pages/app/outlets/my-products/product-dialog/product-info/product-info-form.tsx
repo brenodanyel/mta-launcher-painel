@@ -15,6 +15,7 @@ import { FileInput } from '@/components/file-input';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import InfoIcon from '@mui/icons-material/Info';
+import { Fragment } from 'react';
 
 const descriptionHelperTooltip = (
   <Tooltip
@@ -30,8 +31,15 @@ const descriptionHelperTooltip = (
         </Typography>
         <Divider />
         <Typography variant='caption'>
-          You can also include images with the following syntax:{' '}
-          <Typography variant='caption'>![alt text](https://image.url)</Typography>
+          You can include images with the following syntax:{' '}
+          <Typography variant='caption'>
+            ![alt text](https://image.url)
+          </Typography>
+        </Typography>
+        <Divider />
+        <Typography variant='caption'>
+          You can force line-breaks with the following syntax:{' '}
+          <Typography variant='caption'>{'<br />'}</Typography>
         </Typography>
       </Stack>
     }
@@ -108,7 +116,7 @@ export function ProductInfoForm() {
         <TextField
           label='Description'
           multiline
-          rows={10}
+          rows={15}
           disabled={mode === 'view'}
           error={!!errors.description()}
           value={formData.description}
@@ -137,8 +145,8 @@ export function ProductInfoForm() {
         </Box>
       </Grid>
       {formData.links.map((link, index, arr) => (
-        <>
-          <Grid key={link.id} xs={12} sm={4}>
+        <Fragment key={link.id}>
+          <Grid xs={12} sm={4}>
             <TextField
               label='Link Name'
               helperText={errors.linkName(link)}
@@ -200,7 +208,7 @@ export function ProductInfoForm() {
               <Divider variant='fullWidth' />
             </Grid>
           )}
-        </>
+        </Fragment>
       ))}
       {mode === 'edit' && (
         <Grid xs={12}>

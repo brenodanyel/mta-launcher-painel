@@ -69,8 +69,8 @@ export function MyProducts() {
         <Stack direction='row' flexWrap='wrap' gap='0.5em'>
           {products.map((product) => (
             <Box
-              sx={{ flex: '1 0 250px', overflow: 'hidden' }}
               key={product.id}
+              sx={{ flex: '1 0 250px', overflow: 'hidden' }}
             >
               <ProductCard product={product} />
             </Box>

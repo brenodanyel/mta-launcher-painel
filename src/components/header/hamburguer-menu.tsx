@@ -8,18 +8,13 @@ import {
   MenuItem,
 } from '@mui/material';
 import { pages } from '@/components/header';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation, matchPath } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 
 export function HamburguerMenu() {
+  const { pathname } = useLocation();
   const anchorRef = useRef(null);
   const [visible, setVisible] = useState(false);
-
-  function handleToggle(elem?: HTMLElement) {
-    if (elem) {
-      return;
-    }
-  }
 
   return (
     <>
@@ -42,7 +37,11 @@ export function HamburguerMenu() {
         }}
       >
         {pages.map((page) => (
-          <MenuItem key={page.href} onClick={() => setVisible(false)}>
+          <MenuItem
+            key={page.href}
+            onClick={() => setVisible(false)}
+            selected={!!matchPath(page.href, pathname)}
+          >
             <ListItemIcon>{page.icon}</ListItemIcon>
             <Link
               component={RouterLink}

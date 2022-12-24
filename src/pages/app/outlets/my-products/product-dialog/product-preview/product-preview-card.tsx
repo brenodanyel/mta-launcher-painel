@@ -45,9 +45,9 @@ export function ProductPreviewCard() {
           >
             {formData.links.map((link) => (
               <Link
+                key={link.id}
                 href={link.url}
                 target='_blank'
-                key={link.id}
                 underline='none'
               >
                 <Button
@@ -93,6 +93,7 @@ export function ProductPreviewCard() {
         <MuiMarkdown
           options={{
             overrides: {
+              iframe: { component: 'div', props: { hidden: true } },
               a: { component: Link, props: { href: null } },
               h1: {
                 component: Typography,
