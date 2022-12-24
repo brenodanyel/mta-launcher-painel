@@ -9,7 +9,7 @@ import { ProductDialogContextProvider } from './product-dialog-context';
 const products: Product[] = [
   {
     id: 1,
-    name: 'Server Info',
+    name: 'Server Profile',
     createdAt: '2022-11-30T00:00:00.000Z',
     removedAt: '2022-12-01T00:00:00.000Z',
     server: {

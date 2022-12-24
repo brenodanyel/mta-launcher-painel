@@ -120,7 +120,7 @@ export function Login() {
                     textAlign: 'center',
                   }}
                 >
-                  DON'T HAVE AN ACCOUNT?{' '}
+                  {'DON\'T HAVE AN ACCOUNT? '}
                   <Link
                     sx={{
                       cursor: 'pointer',

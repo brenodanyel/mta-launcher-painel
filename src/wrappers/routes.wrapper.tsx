@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Register } from '@/pages/register';
 import { Login } from '@/pages/login';
 import { App } from '@/pages/app';
-import { MyProducts } from '@/pages/app/outlets/my-products';
+import { MyProducts } from '@/pages/app/my-products';
 import { AllProducts } from '@/pages/app/all-products';
 
 export function RoutersWrapper() {
