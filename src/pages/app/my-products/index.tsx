@@ -70,7 +70,12 @@ export function MyProducts() {
           {products.map((product) => (
             <Box
               key={product.id}
-              sx={{ flex: '1 0 250px', overflow: 'hidden' }}
+              sx={{
+                flexGrow: 1,
+                flexShrink: 0,
+                flexBasis: { xs: '80vw', sm: '350px' },
+                overflow: 'hidden',
+              }}
             >
               <ProductCard product={product} />
             </Box>

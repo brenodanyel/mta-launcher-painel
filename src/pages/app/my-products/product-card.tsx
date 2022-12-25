@@ -26,7 +26,7 @@ export function ProductCard(props: ProductCardProps) {
   const { product } = props;
 
   return (
-    <Card>
+    <Card sx={{ width: '100%', height: '100%' }}>
       <CardHeader
         title={product.name.toUpperCase()}
         subheader={
