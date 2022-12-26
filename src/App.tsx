@@ -1,12 +1,17 @@
 import { Toaster } from 'react-hot-toast';
 import { MUIWrapper } from '@/wrappers/mui.wrapper';
-import { RoutersWrapper } from '@/wrappers/routes.wrapper';
+import { ReactQueryWrapper } from '@/wrappers/react-query.wrapper';
+import { Routes } from '@/wrappers/routes.wrapper';
 
 export function App() {
   return (
-    <MUIWrapper>
-      <RoutersWrapper />
+    <>
+      <MUIWrapper>
+        <ReactQueryWrapper>
+          <Routes />
+        </ReactQueryWrapper>
+      </MUIWrapper>
       <Toaster position='top-right' />
-    </MUIWrapper>
+    </>
   );
 }

@@ -16,17 +16,12 @@ import { ProfileIcon } from './profile-icon';
 export const pages = [
   {
     name: 'My Products',
-    href: '/my-products',
+    href: '/',
     icon: <InventoryIcon color='disabled' />,
   },
   {
     name: 'All Products',
     href: '/all-products',
-    icon: <ShoppingCartIcon color='disabled' />,
-  },
-  {
-    name: 'All Products',
-    href: '/all-products2',
     icon: <ShoppingCartIcon color='disabled' />,
   },
 ];

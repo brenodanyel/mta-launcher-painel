@@ -69,17 +69,6 @@ export function ProductDialogContextProvider(props: ProductDialogContextProps) {
     logo: dialogState?.product.logo ?? '',
   };
 
-  useEffect(() => {
-    if (!dialogState?.product) return;
-    setFormData({
-      ip: dialogState.product.server?.ip ?? '',
-      port: String(dialogState.product.server?.port ?? ''),
-      description: dialogState.product.description ?? '',
-      links: dialogState.product.links ?? [],
-      logo: dialogState.product.logo ?? '',
-    });
-  }, [dialogState?.product]);
-
   const [formData, setFormData] =
     useState<DialogType['formData']>(initialFormData);
 
@@ -89,6 +78,10 @@ export function ProductDialogContextProvider(props: ProductDialogContextProps) {
   function resetFormData() {
     setFormData(initialFormData);
   }
+
+  useEffect(() => {
+    resetFormData();
+  }, [dialogState?.product]);
 
   const errors = {
     ip() {

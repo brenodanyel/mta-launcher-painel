@@ -7,8 +7,10 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
+import { useAuth } from '@/hooks/useAuth';
 
 export function ProfileIcon() {
+  const { signOut } = useAuth();
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -35,7 +37,12 @@ export function ProfileIcon() {
         open={visible}
         onClose={() => setVisible(false)}
       >
-        <MenuItem onClick={() => setVisible(false)}>
+        <MenuItem
+          onClick={() => {
+            signOut();
+            setVisible(false);
+          }}
+        >
           <Typography textAlign='center'>Logout</Typography>
         </MenuItem>
       </Menu>

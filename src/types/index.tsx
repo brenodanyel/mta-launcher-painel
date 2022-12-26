@@ -1,14 +1,13 @@
 export type Link = {
-  id: number;
   name: string;
   url: string;
 };
 
 export type Product = {
-  id: number;
+  id: string;
   name: string;
   createdAt: string;
-  removedAt: string;
+  removedAt: string | null;
   description?: string;
   logo?: string;
   server?: {
@@ -16,4 +15,16 @@ export type Product = {
     port: number;
   };
   links: Link[];
+};
+
+export type User = {
+  id: number;
+  username: string;
+  roles: Role[];
+};
+
+export type Role = {
+  id: number;
+  slug: string;
+  name: string;
 };

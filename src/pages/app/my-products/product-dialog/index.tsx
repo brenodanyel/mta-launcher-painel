@@ -5,9 +5,9 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { ProductInfo } from './product-info';
-import { useDialogContext } from '../product-dialog-context';
-import { ProductPreview } from './product-preview';
+import { ProductInfo } from './server-profile/content';
+import { useDialogContext } from '../dialog-context';
+import { ProductPreview } from './server-profile/preview';
 
 export function ProductDialog() {
   const { dialogState, setDialogState } = useDialogContext();
@@ -20,7 +20,7 @@ export function ProductDialog() {
       onClose={() => setDialogState(undefined)}
       maxWidth='lg'
       fullWidth
-      key={dialogState?.mode}
+      // key={dialogState?.mode}
       PaperProps={{
         elevation: 0,
         variant: 'outlined',

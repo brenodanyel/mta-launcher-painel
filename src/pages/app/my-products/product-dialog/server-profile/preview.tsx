@@ -1,9 +1,9 @@
-import { Box, Button, Link, Paper, Typography } from '@mui/material';
+import { Stack, Typography, Box, Button, Link, Paper } from '@mui/material';
 import ReplyIcon from '@mui/icons-material/Reply';
-import { useDialogContext } from '../../product-dialog-context';
+import { useDialogContext } from '../../dialog-context';
 import MuiMarkdown from 'mui-markdown';
 
-export function ProductPreviewCard() {
+function PreviewContent() {
   const { formData } = useDialogContext();
 
   return (
@@ -45,7 +45,7 @@ export function ProductPreviewCard() {
           >
             {formData.links.map((link) => (
               <Link
-                key={link.id}
+                key={link.url}
                 href={link.url}
                 target='_blank'
                 underline='none'
@@ -126,5 +126,16 @@ export function ProductPreviewCard() {
         </MuiMarkdown>
       </Box>
     </Paper>
+  );
+}
+
+export function ProductPreview() {
+  return (
+    <Stack sx={{ padding: '1em', flexDirection: 'column', gap: '1em' }}>
+      <Typography variant='h6' fontSize='1.5em'>
+        PREVIEW
+      </Typography>
+      <PreviewContent />
+    </Stack>
   );
 }

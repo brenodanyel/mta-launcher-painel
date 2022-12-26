@@ -7,13 +7,17 @@ import {
   Paper,
   TextField,
   Fade,
-  Button,
   Link,
   Grow,
+  Container,
 } from '@mui/material';
+import { LoadingButton as Button } from '@mui/lab';
 import { PasswordInput } from '@/components/password-input';
+import { useAuth } from '@/hooks/useAuth';
 
 export function Register() {
+  const { signUp, isLoading } = useAuth();
+
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -57,9 +61,10 @@ export function Register() {
     return Object.values(errors).some((error) => error());
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    console.log(formData);
+    const { username, email, password } = formData;
+    await signUp(username, email, password);
   }
 
   return (
@@ -75,105 +80,114 @@ export function Register() {
               alignItems: 'center',
             }}
           >
-            <Paper
-              elevation={3}
-              sx={{
-                padding: '2rem',
-                width: 'clamp(400px, 40%, 500px)',
-                display: 'flex',
-                justifyContent: 'center',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '2rem',
-              }}
-            >
-              <Typography
+            <Container maxWidth='sm'>
+              <Paper
+                elevation={3}
                 sx={{
-                  width: '60%',
-                  fontSize: '1.5em',
-                  textAlign: 'center',
-                }}
-              >
-                CREATE A NEW ACCOUNT
-              </Typography>
-              <Box
-                sx={{
+                  padding: '2rem',
                   display: 'flex',
+                  justifyContent: 'center',
                   flexDirection: 'column',
-                  width: '100%',
-                  gap: '1rem',
+                  alignItems: 'center',
+                  gap: '2rem',
                 }}
               >
-                <TextField
-                  label='Username'
-                  error={!!errors.username()}
-                  helperText={errors.username()}
-                  value={formData.username}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      username: e.target.value,
-                    }))
-                  }
-                />
-                <TextField
-                  label='E-mail'
-                  type='email'
-                  error={!!errors.email()}
-                  helperText={errors.email()}
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, email: e.target.value }))
-                  }
-                />
-                <PasswordInput
-                  label='Password'
-                  type='password'
-                  error={!!errors.password()}
-                  helperText={errors.password()}
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      password: e.target.value,
-                    }))
-                  }
-                />
-                <PasswordInput
-                  label='Password Confirmation'
-                  type='password'
-                  error={!!errors.passwordConfirm()}
-                  helperText={errors.passwordConfirm()}
-                  value={formData.passwordConfirm}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      passwordConfirm: e.target.value,
-                    }))
-                  }
-                />
-                <Button type='submit' disabled={validateForm()}>
-                  Register
-                </Button>
                 <Typography
                   sx={{
+                    width: '60%',
+                    fontSize: '1.5em',
                     textAlign: 'center',
                   }}
                 >
-                  ALREADY HAVE AN ACCOUNT?{' '}
-                  <Link
-                    href='/login'
-                    sx={{
-                      cursor: 'pointer',
-                    }}
-                    component={RouterLink}
-                    to={'/login'}
-                  >
-                    SIGN IN
-                  </Link>
+                  CREATE A NEW ACCOUNT
                 </Typography>
-              </Box>
-            </Paper>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%',
+                    gap: '1rem',
+                  }}
+                >
+                  <TextField
+                    label='Username'
+                    error={!!errors.username()}
+                    helperText={errors.username()}
+                    value={formData.username}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        username: e.target.value,
+                      }))
+                    }
+                  />
+                  <TextField
+                    label='E-mail'
+                    type='email'
+                    error={!!errors.email()}
+                    helperText={errors.email()}
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        email: e.target.value,
+                      }))
+                    }
+                  />
+                  <PasswordInput
+                    label='Password'
+                    type='password'
+                    error={!!errors.password()}
+                    helperText={errors.password()}
+                    value={formData.password}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        password: e.target.value,
+                      }))
+                    }
+                  />
+                  <PasswordInput
+                    label='Password Confirmation'
+                    type='password'
+                    error={!!errors.passwordConfirm()}
+                    helperText={errors.passwordConfirm()}
+                    value={formData.passwordConfirm}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        passwordConfirm: e.target.value,
+                      }))
+                    }
+                  />
+                  <Button
+                    type='submit'
+                    disabled={validateForm()}
+                    loading={isLoading}
+                    variant='contained'
+                  >
+                    Register
+                  </Button>
+                  <Typography
+                    sx={{
+                      textAlign: 'center',
+                    }}
+                  >
+                    ALREADY HAVE AN ACCOUNT?{' '}
+                    <Link
+                      href='/login'
+                      sx={{
+                        cursor: 'pointer',
+                      }}
+                      component={RouterLink}
+                      to={'/login'}
+                    >
+                      SIGN IN
+                    </Link>
+                  </Typography>
+                </Box>
+              </Paper>
+            </Container>
           </Box>
         </form>
       </Fade>

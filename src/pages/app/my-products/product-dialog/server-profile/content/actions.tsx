@@ -2,7 +2,7 @@ import { Box, Button, Stack } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { useDialogContext } from '../../product-dialog-context';
+import { useDialogContext } from '../../../dialog-context';
 
 export function ProductInfoActions() {
   const { dialogState, setDialogState, formData, resetFormData, errors } =

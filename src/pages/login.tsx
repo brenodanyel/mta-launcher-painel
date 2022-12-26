@@ -8,15 +8,18 @@ import {
   TextField,
   Grow,
   Fade,
-  Button,
   Link,
 } from '@mui/material';
+import { LoadingButton as Button } from '@mui/lab';
 import { PasswordInput } from '@/components/password-input';
+import { useAuth } from '@/hooks/useAuth';
 
 export function Login() {
+  const { signIn, isLoading } = useAuth();
+
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: import.meta.env.VITE_DEFAULT_EMAIL_TO_LOGIN || '',
+    password: import.meta.env.VITE_DEFAULT_PASSWORD_TO_LOGIN || '',
   });
 
   const errors = {
@@ -42,9 +45,10 @@ export function Login() {
     return Object.values(errors).some((error) => error());
   }
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    console.log(formData);
+    const { email, password } = formData;
+    await signIn(email, password);
   }
 
   return (
@@ -112,7 +116,12 @@ export function Login() {
                     }))
                   }
                 />
-                <Button type='submit' disabled={validateForm()}>
+                <Button
+                  type='submit'
+                  disabled={validateForm()}
+                  variant='contained'
+                  loading={isLoading}
+                >
                   Register
                 </Button>
                 <Typography
@@ -120,7 +129,7 @@ export function Login() {
                     textAlign: 'center',
                   }}
                 >
-                  {'DON\'T HAVE AN ACCOUNT? '}
+                  DON&apos;T HAVE AN ACCOUNT?
                   <Link
                     sx={{
                       cursor: 'pointer',

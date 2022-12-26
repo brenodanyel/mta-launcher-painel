@@ -15,7 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Link as RouterLink } from 'react-router-dom';
 import { getExpiresIn } from '.';
-import { useDialogContext } from './product-dialog-context';
+import { useDialogContext } from './dialog-context';
 
 type ProductCardProps = {
   product: Product;
@@ -63,7 +63,14 @@ export function ProductCard(props: ProductCardProps) {
           flexWrap='wrap'
         >
           <Typography>EXPIRES:</Typography>
-          <Tooltip title={moment(product.removedAt).toLocaleString()} arrow>
+          <Tooltip
+            title={
+              product.removedAt
+                ? moment(product.removedAt).toLocaleString()
+                : ''
+            }
+            arrow
+          >
             <Typography>{getExpiresIn(product)}</Typography>
           </Tooltip>
         </Stack>

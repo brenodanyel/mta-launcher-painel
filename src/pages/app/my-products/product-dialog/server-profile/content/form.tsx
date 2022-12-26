@@ -10,7 +10,7 @@ import {
   Typography,
   Box,
 } from '@mui/material';
-import { useDialogContext } from '../../product-dialog-context';
+import { useDialogContext } from '../../../dialog-context';
 import { FileInput } from '@/components/file-input';
 
 import DeleteIcon from '@mui/icons-material/Delete';
