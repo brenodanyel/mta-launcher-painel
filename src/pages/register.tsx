@@ -90,6 +90,7 @@ export function Register() {
                   flexDirection: 'column',
                   alignItems: 'center',
                   gap: '2rem',
+                  borderRadius: '0.5rem',
                 }}
               >
                 <Typography
