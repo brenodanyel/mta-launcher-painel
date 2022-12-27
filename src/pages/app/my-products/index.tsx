@@ -3,7 +3,6 @@ import { Box, Stack, Typography } from '@mui/material';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { ProductCard } from './product-card';
 import { ProductDialog } from './product-dialog';
-import { useQuery } from 'react-query';
 import { useMyProducts } from './hooks/useMyProducts';
 import { useProductDialogStore } from './product-dialog/product-dialog.store';
 import { useServerProfileStore } from './product-dialog/server-profile/server-profile.store';
