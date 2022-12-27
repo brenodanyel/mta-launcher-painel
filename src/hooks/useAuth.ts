@@ -113,12 +113,12 @@ export function useAuth() {
         },
       });
 
+
       if (status !== 200) {
         if (data.errors) {
           for (const error of data.errors) {
             toast.error(error.message);
           }
-          return;
         }
         throw new Error('Falha ao validar token');
       }

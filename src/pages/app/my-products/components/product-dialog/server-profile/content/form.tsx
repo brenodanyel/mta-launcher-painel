@@ -209,7 +209,7 @@ export function ProductInfoForm() {
               updateFormDataItem('links', [
                 ...formData.links,
                 {
-                  id: formData.links.length.toString(),
+                  id: (formData.links.length + 1).toString(),
                   name: '',
                   url: '',
                 },

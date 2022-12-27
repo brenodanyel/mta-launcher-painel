@@ -46,7 +46,7 @@ function PreviewContent() {
           >
             {serverProfileStore.formData.links.map((link) => (
               <Link
-                key={link.url}
+                key={link.id}
                 href={link.url}
                 target='_blank'
                 underline='none'
