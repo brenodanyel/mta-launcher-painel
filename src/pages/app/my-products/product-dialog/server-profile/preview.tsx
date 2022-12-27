@@ -1,10 +1,10 @@
 import { Stack, Typography, Box, Button, Link, Paper } from '@mui/material';
 import ReplyIcon from '@mui/icons-material/Reply';
-import { useDialogContext } from '../../dialog-context';
 import MuiMarkdown from 'mui-markdown';
+import { useServerProfileStore } from './server-profile.store';
 
 function PreviewContent() {
-  const { formData } = useDialogContext();
+  const serverProfileStore = useServerProfileStore();
 
   return (
     <Paper
@@ -34,7 +34,8 @@ function PreviewContent() {
           <Box>
             <Typography variant='h6'>SERVER NAME HERE</Typography>
             <Typography variant='caption'>
-              mtasa://{formData.ip || 'IP'}:{formData.port || 'PORT'}
+              mtasa://{serverProfileStore.formData.ip || 'IP'}:
+              {serverProfileStore.formData.port || 'PORT'}
             </Typography>
           </Box>
           <Box
@@ -43,7 +44,7 @@ function PreviewContent() {
               gap: '0.5em',
             }}
           >
-            {formData.links.map((link) => (
+            {serverProfileStore.formData.links.map((link) => (
               <Link
                 key={link.url}
                 href={link.url}
@@ -72,7 +73,7 @@ function PreviewContent() {
           }}
         >
           <img
-            src={formData.logo || '/logo.png'}
+            src={serverProfileStore.formData.logo || '/logo.png'}
             alt='Logo'
             style={{
               width: '100%',
@@ -122,7 +123,7 @@ function PreviewContent() {
             },
           }}
         >
-          {formData.description}
+          {serverProfileStore.formData.description}
         </MuiMarkdown>
       </Box>
     </Paper>

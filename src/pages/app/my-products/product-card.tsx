@@ -1,5 +1,3 @@
-import { Product } from '@/types';
-import moment from 'moment';
 import {
   Card,
   CardActions,
@@ -14,21 +12,21 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Link as RouterLink } from 'react-router-dom';
-import { getExpiresIn } from '.';
-import { useDialogContext } from './dialog-context';
 
 type ProductCardProps = {
-  product: Product;
+  productName: string;
+  productContent: { key: string; value: string; tooltip?: string }[];
+  onClickView: () => void;
+  onClickEdit: () => void;
 };
 
 export function ProductCard(props: ProductCardProps) {
-  const { setDialogState } = useDialogContext();
-  const { product } = props;
+  const { productName, productContent, onClickEdit, onClickView } = props;
 
   return (
     <Card sx={{ width: '100%', height: '100%' }}>
       <CardHeader
-        title={product.name.toUpperCase()}
+        title={productName.toUpperCase()}
         subheader={
           <Link
             component={RouterLink}
@@ -43,60 +41,33 @@ export function ProductCard(props: ProductCardProps) {
         }
       />
       <CardContent>
-        <Stack
-          direction='row'
-          justifyContent='space-between'
-          gap='1em'
-          flexWrap='wrap'
-        >
-          <Typography>SERVER:</Typography>
-          <Typography>
-            {product.server
-              ? `${product.server?.ip}:${product.server.port}`
-              : 'NONE'}
-          </Typography>
-        </Stack>
-        <Stack
-          direction='row'
-          justifyContent='space-between'
-          gap='1em'
-          flexWrap='wrap'
-        >
-          <Typography>EXPIRES:</Typography>
-          <Tooltip
-            title={
-              product.removedAt
-                ? moment(product.removedAt).toLocaleString()
-                : ''
-            }
-            arrow
+        {productContent.map((content) => (
+          <Stack
+            direction='row'
+            justifyContent='space-between'
+            gap='1em'
+            flexWrap='wrap'
+            key={content.key}
           >
-            <Typography>{getExpiresIn(product)}</Typography>
-          </Tooltip>
-        </Stack>
+            <Typography>{content.key}</Typography>
+            <Tooltip title={content.tooltip} arrow>
+              <Typography>{content.value}</Typography>
+            </Tooltip>
+          </Stack>
+        ))}
       </CardContent>
       <Stack>
         <CardActions sx={{ justifyContent: 'center' }}>
-          <IconButton
-            onClick={() => {
-              setDialogState({
-                mode: 'edit',
-                product,
-              });
-            }}
-          >
-            <EditIcon fontSize='large' />
-          </IconButton>
-          <IconButton
-            onClick={() => {
-              setDialogState({
-                mode: 'view',
-                product,
-              });
-            }}
-          >
-            <VisibilityIcon fontSize='large' />
-          </IconButton>
+          <Tooltip title='Edit' arrow>
+            <IconButton onClick={onClickEdit}>
+              <EditIcon fontSize='large' />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title='View' arrow>
+            <IconButton onClick={onClickView}>
+              <VisibilityIcon fontSize='large' />
+            </IconButton>
+          </Tooltip>
         </CardActions>
       </Stack>
     </Card>

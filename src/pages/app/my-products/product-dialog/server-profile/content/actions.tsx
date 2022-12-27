@@ -1,21 +1,27 @@
 import { Box, Button, Stack } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { useDialogContext } from '../../../dialog-context';
+import { useProductDialogStore } from '../../product-dialog.store';
+import { useServerProfileStore } from '../server-profile.store';
+import { useMyProducts } from '../../../hooks/useMyProducts';
 
 export function ProductInfoActions() {
-  const { dialogState, setDialogState, formData, resetFormData, errors } =
-    useDialogContext();
+  const { updateServerProfile, isLoading } = useMyProducts();
+  const productDialogStore = useProductDialogStore();
+  const { errors, formData, resetFormData } = useServerProfileStore();
 
-  const mode = dialogState?.mode;
-
-  if (!mode) {
-    return null;
-  }
-
-  function handleSave() {
-    setDialogState(undefined);
+  async function handleSave() {
+    
+    await updateServerProfile(productDialogStore.productId, {
+      ip: formData.ip,
+      port: formData.port,
+      description: formData.description,
+      externalLinks: formData.links,
+      logoBlob: formData.logoBlob,
+    });
+    // productDialogStore.setOpen(false);
   }
 
   function disableSave() {
@@ -32,15 +38,16 @@ export function ProductInfoActions() {
     }
 
     for (const link of formData.links) {
-      if (errors.linkName(link)) {
+      if (errors.linkName(link.name)) {
         return true;
       }
-      if (errors.linkUrl(link)) {
+
+      if (errors.linkUrl(link.url)) {
         return true;
       }
     }
 
-    false;
+    return false;
   }
 
   return (
@@ -51,41 +58,39 @@ export function ProductInfoActions() {
           gap: '1em',
         }}
       >
-        {mode === 'view' && (
+        {productDialogStore.mode === 'view' && (
           <Button
             startIcon={<EditIcon />}
             onClick={() => {
-              setDialogState({ ...dialogState, mode: 'edit' });
+              productDialogStore.setMode('edit');
             }}
           >
             Edit
           </Button>
         )}
-        {mode === 'edit' && (
+        {productDialogStore.mode === 'edit' && (
           <>
             <Button
               color='error'
               startIcon={<CancelIcon />}
               onClick={() => {
-                setDialogState({
-                  ...dialogState,
-                  mode: 'view',
-                });
+                productDialogStore.setMode('view');
                 resetFormData();
               }}
             >
               Cancel
             </Button>
-            <Button
+            <LoadingButton
+              variant='contained'
               startIcon={<SaveIcon />}
               disabled={disableSave()}
+              loading={isLoading}
               onClick={() => {
                 handleSave();
-                resetFormData();
               }}
             >
               Save
-            </Button>
+            </LoadingButton>
           </>
         )}
       </Stack>

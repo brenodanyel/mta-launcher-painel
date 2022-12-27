@@ -1,40 +1,42 @@
 import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
 import { Button } from '@mui/material';
 import CollectionsIcon from '@mui/icons-material/Collections';
 
 type FileInputProps = {
   disabled?: boolean;
   value: string;
-  setValue: (value: string) => void;
+  setValue: (value: FileInputProps['value']) => void;
   title: string;
   accept?: string;
+  blob: Blob | null;
+  setBlob: (blob: FileInputProps['blob']) => void;
 };
 
 export function FileInput(props: FileInputProps) {
-  const [selectedFile, setSelectedFile] = useState<File>();
-
-  const { disabled, value, setValue, title, accept } = props;
+  const [mounted, setMounted] = useState(false);
+  const { disabled, value, setValue, title, accept, blob, setBlob } = props;
 
   useEffect(() => {
-    if (!selectedFile) {
+    if (!mounted) {
+      return;
+    }
+
+    if (!blob) {
       setValue('');
       return;
     }
 
-    if (selectedFile.size > 1024 * 1024) {
-      toast.error('File size must be less than 1MB');
-      setValue('');
-      return;
-    }
-
-    const objectUrl = URL.createObjectURL(selectedFile);
+    const objectUrl = URL.createObjectURL(blob);
     setValue(objectUrl);
 
     return () => {
       URL.revokeObjectURL(objectUrl);
     };
-  }, [selectedFile]);
+  }, [blob?.name]);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <Button
@@ -74,7 +76,9 @@ export function FileInput(props: FileInputProps) {
         hidden
         accept={accept}
         type='file'
-        onChange={(e) => setSelectedFile(e.target.files?.item(0) ?? undefined)}
+        onChange={(e) => {
+          setBlob(e.target.files?.item(0) || null);
+        }}
       />
     </Button>
   );

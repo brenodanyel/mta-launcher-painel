@@ -5,30 +5,21 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { ProductInfo } from './server-profile/content';
-import { useDialogContext } from '../dialog-context';
+import { ServerProfileInfo } from './server-profile/content';
+import { useProductDialogStore } from './product-dialog.store';
 import { ProductPreview } from './server-profile/preview';
 
-export function ProductDialog() {
-  const { dialogState, setDialogState } = useDialogContext();
+function DialogContent() {
+  const productDialogStore = useProductDialogStore();
+
   const theme = useTheme();
   const md = useMediaQuery(theme.breakpoints.up('md'));
 
-  return (
-    <Dialog
-      open={!!dialogState}
-      onClose={() => setDialogState(undefined)}
-      maxWidth='lg'
-      fullWidth
-      // key={dialogState?.mode}
-      PaperProps={{
-        elevation: 0,
-        variant: 'outlined',
-      }}
-    >
+  if (productDialogStore.productName === 'Server Profile') {
+    return (
       <Grid container>
         <Grid xs={12} md={7}>
-          <ProductInfo />
+          <ServerProfileInfo />
         </Grid>
         <Grid xs={md ? 0 : 12}>
           <Divider orientation={md ? 'vertical' : 'horizontal'} />
@@ -37,6 +28,24 @@ export function ProductDialog() {
           <ProductPreview />
         </Grid>
       </Grid>
+    );
+  }
+
+  return null;
+}
+
+export function ProductDialog() {
+  const productDialogStore = useProductDialogStore();
+
+  return (
+    <Dialog
+      open={productDialogStore.open}
+      onClose={() => productDialogStore.setOpen(false)}
+      maxWidth='lg'
+      fullWidth
+      PaperProps={{ variant: 'outlined', elevation: 0 }}
+    >
+      <DialogContent />
     </Dialog>
   );
 }

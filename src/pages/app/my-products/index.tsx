@@ -2,75 +2,25 @@ import moment from 'moment';
 import { Box, Stack, Typography } from '@mui/material';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { ProductCard } from './product-card';
-import { Product } from '@/types';
 import { ProductDialog } from './product-dialog';
-import { ProductDialogContextProvider } from './dialog-context';
 import { useQuery } from 'react-query';
 import { useMyProducts } from './hooks/useMyProducts';
+import { useProductDialogStore } from './product-dialog/product-dialog.store';
+import { useServerProfileStore } from './product-dialog/server-profile/server-profile.store';
 
-// const products: Product[] = [
-//   // {
-//   //   id: 1,
-//   //   name: 'Server Profile',
-//   //   createdAt: '2022-11-30T00:00:00.000Z',
-//   //   removedAt: '2022-12-01T00:00:00.000Z',
-//   //   server: {
-//   //     ip: '192.168.0.1',
-//   //     port: 22003,
-//   //   },
-//   //   links: [{ id: 1, name: 'Website', url: 'https://google.com' }],
-//   // },
-//   // {
-//   //   id: 2,
-//   //   name: 'TOP List',
-//   //   createdAt: '2021-08-01T00:00:00.000Z',
-//   //   removedAt: '2022-12-01T00:00:00.000Z',
-//   //   server: {
-//   //     ip: '192.168.0.1',
-//   //     port: 22003,
-//   //   },
-//   //   links: [{ id: 1, name: 'Website', url: 'https://google.com' }],
-//   // },
-//   // {
-//   //   id: 3,
-//   //   name: 'TOP List',
-//   //   createdAt: '2021-08-01T00:00:00.000Z',
-//   //   removedAt: '2023-12-01T00:00:00.000Z',
-//   //   links: [{ id: 1, name: 'Website', url: 'https://google.com' }],
-//   // },
-//   // {
-//   //   id: 4,
-//   //   name: 'TOP List',
-//   //   createdAt: '2021-08-01T00:00:00.000Z',
-//   //   removedAt: '2023-12-01T00:00:00.000Z',
-//   //   links: [{ id: 1, name: 'Website', url: 'https://google.com' }],
-//   // },
-//   // {
-//   //   id: 5,
-//   //   name: 'TOP List',
-//   //   createdAt: '2021-08-01T00:00:00.000Z',
-//   //   removedAt: '2023-12-01T00:00:00.000Z',
-//   //   links: [{ id: 1, name: 'Website', url: 'https://google.com' }],
-//   // },
-// ];
-
-export function getExpiresIn(product: Product) {
-  if (!product.removedAt) return 'NEVER';
-
-  const removeAt = moment(product.removedAt);
-  const endDate = removeAt.add(30, 'days');
-  return moment(endDate).fromNow().toUpperCase();
+export function convertExpiresIn(removeAt: string | null) {
+  if (!removeAt) return 'NEVER';
+  return moment(removeAt).fromNow().toUpperCase();
 }
 
 export function MyProducts() {
-  const { fetchMyServerProfiles } = useMyProducts();
+  const productDialogStore = useProductDialogStore();
+  const serverProfileStore = useServerProfileStore();
 
-  const { data: serverProfiles = [] } = useQuery('my-server-profiles', {
-    queryFn: fetchMyServerProfiles,
-  });
+  const { serverProfiles } = useMyProducts();
 
   return (
-    <ProductDialogContextProvider>
+    <>
       <Stack gap='0.5em'>
         <Stack direction='row' alignItems='center' gap='0.5em'>
           <InventoryIcon />
@@ -93,19 +43,50 @@ export function MyProducts() {
                 }}
               >
                 <ProductCard
-                  product={{
-                    id: serverProfile.id,
-                    name: 'Server Profile',
-                    createdAt: serverProfile.createdAt,
-                    removedAt: serverProfile.removedAt,
-                    description: serverProfile.description,
-                    logo: serverProfile.logo,
-                    links: serverProfile.externalLinks,
-
-                    server: {
-                      ip: serverProfile.ip,
-                      port: serverProfile.port,
+                  productName='Server Profile'
+                  productContent={[
+                    {
+                      key: 'EXPIRES IN:',
+                      value: convertExpiresIn(serverProfile.removeAt),
+                      tooltip: serverProfile.removeAt
+                        ? moment(serverProfile.removeAt).toLocaleString()
+                        : '',
                     },
+                    {
+                      key: 'SERVER:',
+                      value:
+                        serverProfile.ip && serverProfile.port
+                          ? `mtasa://${serverProfile.ip}:${serverProfile.port}`
+                          : 'N/A',
+                    },
+                  ]}
+                  onClickEdit={() => {
+                    productDialogStore.setProductName('Server Profile');
+                    productDialogStore.setProductId(serverProfile.id);
+                    productDialogStore.setMode('edit');
+                    productDialogStore.setOpen(true);
+                    serverProfileStore.setInitialFormData({
+                      ip: serverProfile.ip,
+                      port: String(serverProfile.port),
+                      description: serverProfile.description,
+                      logo: serverProfile.logo,
+                      links: serverProfile.externalLinks,
+                    });
+                    serverProfileStore.resetFormData();
+                  }}
+                  onClickView={() => {
+                    productDialogStore.setProductName('Server Profile');
+                    productDialogStore.setProductId(serverProfile.id);
+                    productDialogStore.setMode('view');
+                    productDialogStore.setOpen(true);
+                    serverProfileStore.setInitialFormData({
+                      ip: serverProfile.ip,
+                      port: String(serverProfile.port),
+                      description: serverProfile.description,
+                      logo: serverProfile.logo,
+                      links: serverProfile.externalLinks,
+                    });
+                    serverProfileStore.resetFormData();
                   }}
                 />
               </Box>
@@ -114,6 +95,6 @@ export function MyProducts() {
         </Stack>
       </Stack>
       <ProductDialog />
-    </ProductDialogContextProvider>
+    </>
   );
 }

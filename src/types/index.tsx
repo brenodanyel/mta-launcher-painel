@@ -7,7 +7,7 @@ export type Product = {
   id: string;
   name: string;
   createdAt: string;
-  removedAt: string | null;
+  removeAt: string | null;
   description?: string;
   logo?: string;
   server?: {
