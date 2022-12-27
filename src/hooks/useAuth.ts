@@ -1,11 +1,17 @@
 import toast from 'react-hot-toast';
 import { useState } from 'react';
-import { useNavigate, useLocation, useSearchParams, matchPath } from 'react-router-dom';
+import {
+  useNavigate,
+  useLocation,
+  useSearchParams,
+  matchPath,
+} from 'react-router-dom';
 import { useAuthStore } from '@/stores/auth.store';
 import { axiosInstance } from '@/services/api';
 
 export function useAuth() {
-  const { user, setUser, clearUser, token, setToken, clearToken } = useAuthStore();
+  const { user, setUser, clearUser, token, setToken, clearToken } =
+    useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
   const [search] = useSearchParams();
@@ -38,13 +44,10 @@ export function useAuth() {
 
       axiosInstance.defaults.headers.authorization = data.token;
 
-      toast.success('Login efetuado com sucesso');
-    }
-
-    catch (e: any) {
-      toast.error(e.message ?? 'Erro desconhecido');
-    }
-    finally {
+      toast.success('Logged in successfully');
+    } catch (e: any) {
+      toast.error(e.message ?? 'Unknown Error');
+    } finally {
       setLoading(false);
     }
   }
@@ -67,7 +70,7 @@ export function useAuth() {
           return;
         }
 
-        throw new Error('Falha ao efetuar login');
+        throw new Error('Failed to sign up');
       }
 
       setToken(data.token);
@@ -76,13 +79,10 @@ export function useAuth() {
 
       axiosInstance.defaults.headers.authorization = data.token;
 
-      toast.success('Login efetuado com sucesso');
-    }
-
-    catch (e: any) {
-      toast.error(e.message ?? 'Erro desconhecido');
-    }
-    finally {
+      toast.success('Logged in successfully');
+    } catch (e: any) {
+      toast.error(e.message ?? 'Unknown Error');
+    } finally {
       setLoading(false);
     }
   }
@@ -95,9 +95,10 @@ export function useAuth() {
 
   async function validate() {
     if (!token) {
-      const url = location.pathname !== '/'
-        ? `/login?redirect_url=${location.pathname + location.search}`
-        : '/login';
+      const url =
+        location.pathname !== '/'
+          ? `/login?redirect_url=${location.pathname + location.search}`
+          : '/login';
       navigate(url);
       return;
     }
@@ -113,25 +114,22 @@ export function useAuth() {
         },
       });
 
-
       if (status !== 200) {
         if (data.errors) {
           for (const error of data.errors) {
             toast.error(error.message);
           }
         }
-        throw new Error('Falha ao validar token');
+        throw new Error('Failed to validate token');
       }
 
       setUser(data);
 
       axiosInstance.defaults.headers.authorization = token;
-    }
-    catch (e: any) {
-      toast.error(e.message ?? 'Erro desconhecido');
+    } catch (e: any) {
+      toast.error(e.message ?? 'Unknown Error');
       signOut();
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   }

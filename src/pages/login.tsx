@@ -127,7 +127,7 @@ export function Login() {
                     variant='contained'
                     loading={isLoading}
                   >
-                    Register
+                    LOGIN
                   </Button>
                   <Typography
                     sx={{

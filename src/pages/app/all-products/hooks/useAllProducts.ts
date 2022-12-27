@@ -1,4 +1,5 @@
 import { axiosInstance } from '@/services/api';
+import { toast } from 'react-hot-toast';
 import { useQuery } from 'react-query';
 
 type Product = {
@@ -9,10 +10,14 @@ type Product = {
     id: string;
     description: string;
   }[];
+  active: boolean;
 };
 
 export function useAllProducts() {
-  const { data: allProducts = [] } = useQuery('all-products', fetchAllProducts);
+  const { data: allProducts = [], refetch } = useQuery(
+    'all-products',
+    fetchAllProducts,
+  );
 
   async function fetchAllProducts(): Promise<Product[]> {
     try {
@@ -32,7 +37,35 @@ export function useAllProducts() {
     }
   }
 
+  async function updateProduct(id: string, overrides: Partial<Product>) {
+    try {
+      const { status, data } = await axiosInstance({
+        url: `products/${id}`,
+        method: 'patch',
+        data: overrides,
+      });
+
+      if (status !== 200) {
+        if (data.errors) {
+          for (const error of data.errors) {
+            toast.error(error.message);
+          }
+        }
+
+        return;
+      }
+
+      await refetch();
+
+      toast.success('Product updated successfully');
+    } catch (e) {
+      console.log(e);
+      toast.error('Error updating product');
+    }
+  }
+
   return {
     allProducts,
+    updateProduct,
   };
 }

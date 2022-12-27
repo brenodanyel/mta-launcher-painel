@@ -6,7 +6,7 @@ const darkTheme = createTheme({
   palette: {
     mode: 'dark',
     text: {
-      primary: '#AAA',
+      primary: '#aaa',
     },
   },
   components: {
@@ -14,6 +14,11 @@ const darkTheme = createTheme({
       defaultProps: {
         fullWidth: true,
         size: 'small',
+      },
+    },
+    MuiTooltip: {
+      defaultProps: {
+        arrow: true,
       },
     },
     MuiButton: {

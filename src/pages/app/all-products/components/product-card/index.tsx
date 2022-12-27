@@ -1,20 +1,34 @@
 import { Paper, Stack, Typography, Button } from '@mui/material';
+import { useAuth } from '@/hooks/useAuth';
+import { ProductCardAdminActions } from './product-card.admin-actions';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ErrorIcon from '@mui/icons-material/ErrorOutline';
+import { useProductsDialogStore } from '../../hooks/useProductsDialogStore';
 
 type ProductCardProps = {
+  productId: string;
   productName: string;
   productPrice: number;
   productAdvantages: {
     id: string;
     description: string;
   }[];
+  productActive: boolean;
 };
 
 export function ProductCard(props: ProductCardProps) {
-  const { productName, productPrice, productAdvantages } = props;
+  const { hasRole } = useAuth();
+  const { setFormData, setOpen, setProductId } = useProductsDialogStore();
+  const {
+    productId,
+    productName,
+    productPrice,
+    productAdvantages,
+    productActive,
+  } = props;
 
   return (
-    <Paper sx={{ borderRadius: '0.5em' }}>
+    <Paper sx={{ borderRadius: '0.5em', position: 'relative' }}>
       <Paper elevation={3}>
         <Stack
           direction='column'
@@ -46,7 +60,13 @@ export function ProductCard(props: ProductCardProps) {
             </Typography>
             <Typography variant='caption'>/MONTH</Typography>
           </Stack>
-          <Button startIcon={<ShoppingCartIcon />}>BUY</Button>
+          {productActive ? (
+            <Button startIcon={<ShoppingCartIcon />}>BUY</Button>
+          ) : (
+            <Button startIcon={<ErrorIcon />} disabled>
+              UNAVAILABLE
+            </Button>
+          )}
         </Stack>
       </Paper>
       {productAdvantages.length > 0 && (
@@ -63,6 +83,20 @@ export function ProductCard(props: ProductCardProps) {
             </Stack>
           ))}
         </Stack>
+      )}
+      {hasRole('admin') && (
+        <ProductCardAdminActions
+          onClickEdit={() => {
+            setFormData({
+              name: productName,
+              price: String(productPrice),
+              advantages: productAdvantages,
+              active: productActive,
+            });
+            setProductId(productId);
+            setOpen(true);
+          }}
+        />
       )}
     </Paper>
   );

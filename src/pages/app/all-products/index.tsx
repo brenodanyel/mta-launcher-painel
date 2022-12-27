@@ -2,6 +2,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useAllProducts } from './hooks/useAllProducts';
 import { ProductCard } from './components/product-card';
+import { ProductDialog } from './components/product-dialog';
 
 export function AllProducts() {
   const { allProducts } = useAllProducts();
@@ -12,14 +13,7 @@ export function AllProducts() {
         <ShoppingCartIcon />
         <Typography variant='h6'>All Products</Typography>
       </Stack>
-      <Stack
-        direction='row'
-        sx={{
-          flexWrap: 'wrap',
-          gap: '0.5em',
-          // justifyContent: 'center',
-        }}
-      >
+      <Stack direction='row' flexWrap='wrap' gap='0.5em'>
         {allProducts.map((product) => (
           <Box
             key={product.id}
@@ -31,13 +25,16 @@ export function AllProducts() {
             }}
           >
             <ProductCard
+              productId={product.id}
               productName={product.name}
               productPrice={product.price}
               productAdvantages={product.advantages}
+              productActive={product.active}
             />
           </Box>
         ))}
       </Stack>
+      <ProductDialog />
     </Stack>
   );
 }
