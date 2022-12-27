@@ -1,10 +1,20 @@
 import { axiosInstance } from '@/services/api';
 import { useQuery } from 'react-query';
 
+type Product = {
+  id: string;
+  name: string;
+  price: number;
+  advantages: {
+    id: string;
+    description: string;
+  }[];
+};
+
 export function useAllProducts() {
   const { data: allProducts = [] } = useQuery('all-products', fetchAllProducts);
 
-  async function fetchAllProducts() {
+  async function fetchAllProducts(): Promise<Product[]> {
     try {
       const { status, data } = await axiosInstance({
         url: 'products',
