@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { axiosInstance } from '@/services/api';
 import { toast } from 'react-hot-toast';
 import { useQuery } from 'react-query';
-import { useProductDialogStore } from '../product-dialog/product-dialog.store';
+import { useProductDialogStore } from '../components/product-dialog/product-dialog.store';
 
 type ServerProfile = {
   id: string;

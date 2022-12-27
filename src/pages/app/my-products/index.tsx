@@ -2,10 +2,10 @@ import moment from 'moment';
 import { Box, Stack, Typography } from '@mui/material';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import { ProductCard } from './components/product-card';
-import { ProductDialog } from './product-dialog';
+import { ProductDialog } from './components/product-dialog';
 import { useMyProducts } from './hooks/useMyProducts';
-import { useProductDialogStore } from './product-dialog/product-dialog.store';
-import { useServerProfileStore } from './product-dialog/server-profile/server-profile.store';
+import { useProductDialogStore } from './components/product-dialog/product-dialog.store';
+import { useServerProfileStore } from './components/product-dialog/server-profile/server-profile.store';
 
 export function convertExpiresIn(removeAt: string | null) {
   if (!removeAt) return 'NEVER';
