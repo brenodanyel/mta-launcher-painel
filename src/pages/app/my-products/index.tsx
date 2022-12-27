@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { Box, Stack, Typography } from '@mui/material';
 import InventoryIcon from '@mui/icons-material/Inventory';
-import { ProductCard } from './product-card';
+import { ProductCard } from './components/product-card';
 import { ProductDialog } from './product-dialog';
 import { useMyProducts } from './hooks/useMyProducts';
 import { useProductDialogStore } from './product-dialog/product-dialog.store';
@@ -65,6 +65,7 @@ export function MyProducts() {
                     productDialogStore.setMode('edit');
                     productDialogStore.setOpen(true);
                     serverProfileStore.setInitialFormData({
+                      logoBlob: new Blob(),
                       ip: serverProfile.ip,
                       port: String(serverProfile.port),
                       description: serverProfile.description,
@@ -79,6 +80,7 @@ export function MyProducts() {
                     productDialogStore.setMode('view');
                     productDialogStore.setOpen(true);
                     serverProfileStore.setInitialFormData({
+                      logoBlob: new Blob(),
                       ip: serverProfile.ip,
                       port: String(serverProfile.port),
                       description: serverProfile.description,

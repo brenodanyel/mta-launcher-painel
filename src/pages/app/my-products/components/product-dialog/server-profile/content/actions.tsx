@@ -5,7 +5,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useProductDialogStore } from '../../product-dialog.store';
 import { useServerProfileStore } from '../server-profile.store';
-import { useMyProducts } from '../../../hooks/useMyProducts';
+import { useMyProducts } from '../../../../hooks/useMyProducts';
 
 export function ProductInfoActions() {
   const { updateServerProfile, isLoading } = useMyProducts();
@@ -13,7 +13,6 @@ export function ProductInfoActions() {
   const { errors, formData, resetFormData } = useServerProfileStore();
 
   async function handleSave() {
-    
     await updateServerProfile(productDialogStore.productId, {
       ip: formData.ip,
       port: formData.port,
