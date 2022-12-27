@@ -65,7 +65,7 @@ export function MyProducts() {
                     productDialogStore.setMode('edit');
                     productDialogStore.setOpen(true);
                     serverProfileStore.setInitialFormData({
-                      logoBlob: new Blob(),
+                      logoBlob: undefined,
                       ip: serverProfile.ip,
                       port: String(serverProfile.port),
                       description: serverProfile.description,
@@ -80,7 +80,7 @@ export function MyProducts() {
                     productDialogStore.setMode('view');
                     productDialogStore.setOpen(true);
                     serverProfileStore.setInitialFormData({
-                      logoBlob: new Blob(),
+                      logoBlob: undefined,
                       ip: serverProfile.ip,
                       port: String(serverProfile.port),
                       description: serverProfile.description,
