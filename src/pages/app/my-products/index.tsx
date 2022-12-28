@@ -28,7 +28,9 @@ export function MyProducts() {
       <Stack gap='0.5em'>
         <Stack direction='row' alignItems='center' gap='0.5em'>
           <InventoryIcon />
-          <Typography variant='h6'>My Products</Typography>
+          <Typography variant='h6' whiteSpace='nowrap'>
+            My Products
+          </Typography>
         </Stack>
         <Stack direction='row' flexWrap='wrap' gap='0.5em'>
           {serverProfiles.length === 0 ? (

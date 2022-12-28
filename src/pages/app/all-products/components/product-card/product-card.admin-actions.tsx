@@ -3,11 +3,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 type ProductCardAdminActionsProps = {
-  onClickEdit: () => void;
+  onClickEdit(): void;
+  onClickDelete(): void;
 };
 
 export function ProductCardAdminActions(props: ProductCardAdminActionsProps) {
-  const { onClickEdit } = props;
+  const { onClickEdit, onClickDelete } = props;
 
   return (
     <Stack
@@ -24,7 +25,7 @@ export function ProductCardAdminActions(props: ProductCardAdminActionsProps) {
         </IconButton>
       </Tooltip>
       <Tooltip title='Delete'>
-        <IconButton>
+        <IconButton onClick={onClickDelete}>
           <DeleteIcon />
         </IconButton>
       </Tooltip>

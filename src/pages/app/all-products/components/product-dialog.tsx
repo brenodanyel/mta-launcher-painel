@@ -8,9 +8,7 @@ import {
   Tooltip,
   Stack,
   Checkbox,
-  FormLabel,
   FormControlLabel,
-  Radio,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import EditIcon from '@mui/icons-material/Edit';
@@ -23,9 +21,9 @@ import { useState } from 'react';
 
 export function ProductDialog() {
   const [isSaving, setIsSaving] = useState(false);
-  const { updateProduct } = useAllProducts();
+  const { createProduct, updateProduct } = useAllProducts();
 
-  const { open, setOpen, formData, setFormData, errors, productId } =
+  const { open, setOpen, formData, setFormData, errors, productId, action } =
     useProductsDialogStore();
 
   function disableSaveButton() {
@@ -48,12 +46,24 @@ export function ProductDialog() {
 
   async function handleSave() {
     setIsSaving(true);
-    await updateProduct(productId, {
-      name: formData.name,
-      price: Number(formData.price),
-      advantages: formData.advantages,
-      active: formData.active,
-    });
+
+    if (action === 'create') {
+      await createProduct({
+        id: '',
+        name: formData.name,
+        price: Number(formData.price),
+        advantages: formData.advantages,
+        active: formData.active,
+      });
+    } else if (action === 'edit') {
+      await updateProduct(productId, {
+        name: formData.name,
+        price: Number(formData.price),
+        advantages: formData.advantages,
+        active: formData.active,
+      });
+    }
+
     setIsSaving(false);
     setOpen(false);
   }
@@ -61,7 +71,7 @@ export function ProductDialog() {
   return (
     <Dialog
       open={open}
-      PaperProps={{ variant: 'outlined', sx: { p: '1em' } }}
+      PaperProps={{ variant: 'outlined', elevation: 0, sx: { p: '1em' } }}
       maxWidth='sm'
       fullWidth
       onClose={() => {
@@ -77,7 +87,9 @@ export function ProductDialog() {
       >
         <Stack direction='row' sx={{ alignItems: 'center', gap: '0.5em' }}>
           <EditIcon />
-          <Typography variant='h5'>Edit product</Typography>
+          <Typography variant='h5'>
+            {action === 'create' ? 'Create new product' : 'Edit product'}
+          </Typography>
         </Stack>
         <Grid container spacing='1em'>
           <Grid xs={12} sm={7}>
@@ -147,7 +159,6 @@ export function ProductDialog() {
                       if (i === index) {
                         return { ...advantage, description: e.target.value };
                       }
-
                       return advantage;
                     }),
                   });
@@ -199,7 +210,7 @@ export function ProductDialog() {
           loading={isSaving}
           variant='contained'
         >
-          Save
+          {action === 'create' ? 'Create' : 'Save'}
         </LoadingButton>
       </form>
     </Dialog>

@@ -1,9 +1,11 @@
 import { Paper, Stack, Typography, Button } from '@mui/material';
+import { useConfirm } from 'material-ui-confirm';
 import { useAuth } from '@/hooks/useAuth';
 import { ProductCardAdminActions } from './product-card.admin-actions';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ErrorIcon from '@mui/icons-material/ErrorOutline';
 import { useProductsDialogStore } from '../../hooks/useProductsDialogStore';
+import { useAllProducts } from '../../hooks/useAllProducts';
 
 type ProductCardProps = {
   productId: string;
@@ -17,8 +19,10 @@ type ProductCardProps = {
 };
 
 export function ProductCard(props: ProductCardProps) {
+  const { deleteProduct } = useAllProducts();
   const { hasRole } = useAuth();
-  const { setFormData, setOpen, setProductId } = useProductsDialogStore();
+  const confirm = useConfirm();
+  const productsDialogStore = useProductsDialogStore();
   const {
     productId,
     productName,
@@ -26,6 +30,37 @@ export function ProductCard(props: ProductCardProps) {
     productAdvantages,
     productActive,
   } = props;
+
+  async function handleDelete() {
+    const key =
+      'yes, delete ' + productName.toLowerCase().replaceAll(/\s/g, '-');
+
+    await confirm({
+      title: `Delete '${productName}'?`,
+      confirmationText: 'Delete',
+      dialogProps: {
+        maxWidth: 'xs',
+        PaperProps: { elevation: 0, variant: 'outlined' },
+      },
+      content: (
+        <Stack sx={{ textAlign: 'center', gap: '0.5em', mb: '0.5em' }}>
+          <Typography>Are you sure you want to delete this product?</Typography>
+          <Typography fontSize='0.8em'>
+            Note that This action cannot be undone!
+          </Typography>
+          <Typography fontSize='0.8em'>
+            {`Please type "${key}" to confirm.`}
+          </Typography>
+        </Stack>
+      ),
+      confirmationKeyword: key,
+      cancellationButtonProps: {
+        color: 'error',
+      },
+    })
+      .then(() => deleteProduct(productId))
+      .catch(() => console.log('deletion canceled'));
+  }
 
   return (
     <Paper sx={{ borderRadius: '0.5em', position: 'relative' }}>
@@ -87,14 +122,18 @@ export function ProductCard(props: ProductCardProps) {
       {hasRole('admin') && (
         <ProductCardAdminActions
           onClickEdit={() => {
-            setFormData({
+            productsDialogStore.setFormData({
               name: productName,
               price: String(productPrice),
               advantages: productAdvantages,
               active: productActive,
             });
-            setProductId(productId);
-            setOpen(true);
+            productsDialogStore.setProductId(productId);
+            productsDialogStore.setAction('edit');
+            productsDialogStore.setOpen(true);
+          }}
+          onClickDelete={() => {
+            handleDelete();
           }}
         />
       )}

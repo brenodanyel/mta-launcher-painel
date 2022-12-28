@@ -4,6 +4,9 @@ type State = {
   open: boolean;
   setOpen: (open: State['open']) => void;
 
+  action: 'edit' | 'create';
+  setAction: (action: State['action']) => void;
+
   productId: string;
   setProductId: (productId: State['productId']) => void;
 
@@ -28,6 +31,9 @@ type State = {
 export const useProductsDialogStore = create<State>((set, get) => ({
   open: false,
   setOpen: (open) => set({ open }),
+
+  action: 'create',
+  setAction: (action) => set({ action }),
 
   productId: '',
   setProductId: (productId) => set({ productId }),

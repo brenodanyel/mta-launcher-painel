@@ -22,7 +22,7 @@ export function useAllProducts() {
   async function fetchAllProducts(): Promise<Product[]> {
     try {
       const { status, data } = await axiosInstance({
-        url: 'products',
+        url: '/products',
         method: 'get',
       });
 
@@ -40,7 +40,7 @@ export function useAllProducts() {
   async function updateProduct(id: string, overrides: Partial<Product>) {
     try {
       const { status, data } = await axiosInstance({
-        url: `products/${id}`,
+        url: `/products/${id}`,
         method: 'patch',
         data: overrides,
       });
@@ -51,21 +51,75 @@ export function useAllProducts() {
             toast.error(error.message);
           }
         }
-
-        return;
+        throw new Error('Error updating product');
       }
 
       await refetch();
 
       toast.success('Product updated successfully');
-    } catch (e) {
+    } catch (e: any) {
       console.log(e);
-      toast.error('Error updating product');
+      toast.error(e.message ?? 'Internal Error');
     }
   }
+
+  async function createProduct(product: Product) {
+    try {
+      const { status, data } = await axiosInstance({
+        url: '/products',
+        method: 'post',
+        data: product,
+      });
+
+      if (status !== 201) {
+        if (data.errors) {
+          for (const error of data.errors) {
+            toast.error(error.message);
+          }
+        }
+        throw new Error('Error creating product');
+      }
+
+      await refetch();
+
+      toast.success('Product created successfully');
+    } catch (e: any) {
+      console.log(e);
+      toast.error(e.message ?? 'Internal Error');
+    }
+  }
+
+
+  async function deleteProduct(id: string) {
+    try {
+      const { status, data } = await axiosInstance({
+        url: `/products/${id}`,
+        method: 'delete',
+      });
+
+      if (status !== 200) {
+        if (data.errors) {
+          for (const error of data.errors) {
+            toast.error(error.message);
+          }
+        }
+        throw new Error('Error deleting product');
+      }
+
+      await refetch();
+
+      toast.success('Product deleted successfully');
+    } catch (e: any) {
+      console.log(e);
+      toast.error(e.message ?? 'Internal Error');
+    }
+  }
+
 
   return {
     allProducts,
     updateProduct,
+    createProduct,
+    deleteProduct,
   };
 }
