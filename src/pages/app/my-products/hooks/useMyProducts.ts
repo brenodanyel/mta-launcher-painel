@@ -4,22 +4,30 @@ import { toast } from 'react-hot-toast';
 import { useQuery } from 'react-query';
 import { useProductDialogStore } from '../components/product-dialog/product-dialog.store';
 
-type ServerProfile = {
+export type ServerProfile = {
   id: string;
   ip: string;
   port: number;
   description: string;
   logo: string;
-  externalLinks: { id: string, name: string; url: string; }[];
+  externalLinks: { id: string; name: string; url: string; }[];
   active: boolean;
   createdAt: string;
   removeAt: string | null;
   ownerId: string;
+  owner: {
+    id: string;
+    email: string;
+    username: string;
+  };
 };
 
 export function useMyProducts() {
   const productDialogStore = useProductDialogStore();
-  const { data: serverProfiles = [], refetch } = useQuery('my-products', fetchMyServerProfiles);
+  const { data: serverProfiles = [], refetch } = useQuery(
+    'my-products',
+    fetchMyServerProfiles,
+  );
 
   const [isLoading, setLoading] = useState(false);
 
@@ -45,14 +53,17 @@ export function useMyProducts() {
     }
   }
 
-  async function updateServerProfile(id: string, overrides: {
-    ip?: string;
-    port?: string;
-    description?: string;
-    logoBlob?: Blob;
-    externalLinks?: { id: string, name: string; url: string; }[];
-    active?: boolean;
-  }) {
+  async function updateServerProfile(
+    id: string,
+    overrides: {
+      ip?: string;
+      port?: string;
+      description?: string;
+      logoBlob?: Blob;
+      externalLinks?: { id: string; name: string; url: string; }[];
+      active?: boolean;
+    },
+  ) {
     try {
       setLoading(true);
 
@@ -63,7 +74,10 @@ export function useMyProducts() {
       if (overrides.logoBlob) {
         formData.append('logo', overrides.logoBlob);
       }
-      formData.append('externalLinks', JSON.stringify(overrides.externalLinks ?? []));
+      formData.append(
+        'externalLinks',
+        JSON.stringify(overrides.externalLinks ?? []),
+      );
       formData.append('active', overrides.active ? 'true' : 'false');
 
       const { status, data } = await axiosInstance({
@@ -89,8 +103,7 @@ export function useMyProducts() {
 
       productDialogStore.setOpen(false);
       toast.success('Server profile updated successfully');
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   }

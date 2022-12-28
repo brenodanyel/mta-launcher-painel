@@ -36,6 +36,15 @@ const darkTheme = createTheme({
         color: 'inherit',
       },
     },
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          '&:before': {
+            display: 'none',
+          },
+        },
+      },
+    },
   },
 });
 

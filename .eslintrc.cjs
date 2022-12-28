@@ -19,7 +19,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-explicit-any': 'off',
     'react/react-in-jsx-scope': 'off',
-    indent: ['error', 2],
+    indent: 'off',
     'linebreak-style': ['error', 'windows'],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
