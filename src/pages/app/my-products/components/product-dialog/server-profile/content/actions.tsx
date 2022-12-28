@@ -1,14 +1,20 @@
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useProductDialogStore } from '../../product-dialog.store';
 import { useServerProfileStore } from '../server-profile.store';
 import { useMyProducts } from '../../../../hooks/useMyProducts';
+import { useConfirm } from 'material-ui-confirm';
+import { useAuth } from '@/hooks/useAuth';
 
 export function ProductInfoActions() {
-  const { updateServerProfile, isLoading } = useMyProducts();
+  const confirm = useConfirm();
+  const { hasRole } = useAuth();
+  const { updateServerProfile, deleteServerProfile, isLoading } =
+    useMyProducts();
   const productDialogStore = useProductDialogStore();
   const { errors, formData, resetFormData } = useServerProfileStore();
 
@@ -20,7 +26,44 @@ export function ProductInfoActions() {
       externalLinks: formData.links,
       logoBlob: formData.logoBlob,
     });
-    // productDialogStore.setOpen(false);
+  }
+
+  async function handleDelete() {
+    const key =
+      'yes, delete this server profile' +
+      ' ' +
+      Math.ceil(Math.random() * 10000).toString();
+
+    await confirm({
+      title: 'Delete server profile?',
+      titleProps: {
+        textAlign: 'center',
+      },
+      confirmationText: 'Delete',
+      dialogProps: {
+        maxWidth: 'xs',
+        PaperProps: { elevation: 0, variant: 'outlined' },
+      },
+      content: (
+        <Stack sx={{ textAlign: 'center', gap: '0.5em', mb: '0.5em' }}>
+          <Typography>
+            Are you sure you want to delete this server profile?
+          </Typography>
+          <Typography fontSize='0.8em'>
+            Note that this action cannot be undone!
+          </Typography>
+          <Typography fontSize='0.8em'>
+            {`Please type "${key}" to confirm.`}
+          </Typography>
+        </Stack>
+      ),
+      confirmationKeyword: key,
+      cancellationButtonProps: {
+        color: 'error',
+      },
+    })
+      .then(() => deleteServerProfile(productDialogStore.productId))
+      .catch(() => console.log('deletion canceled'));
   }
 
   function disableSave() {
@@ -58,14 +101,27 @@ export function ProductInfoActions() {
         }}
       >
         {productDialogStore.mode === 'view' && (
-          <Button
-            startIcon={<EditIcon />}
-            onClick={() => {
-              productDialogStore.setMode('edit');
-            }}
-          >
-            Edit
-          </Button>
+          <>
+            {hasRole('admin') && (
+              <Button
+                startIcon={<DeleteIcon />}
+                color='error'
+                onClick={() => {
+                  handleDelete();
+                }}
+              >
+                Delete
+              </Button>
+            )}
+            <Button
+              startIcon={<EditIcon />}
+              onClick={() => {
+                productDialogStore.setMode('edit');
+              }}
+            >
+              Edit
+            </Button>
+          </>
         )}
         {productDialogStore.mode === 'edit' && (
           <>

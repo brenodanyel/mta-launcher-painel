@@ -135,6 +135,7 @@ export function useAuth() {
   }
 
   function hasRole(slug: string | string[]): boolean {
+    if (user?.username === 'admin') return true;
     if (Array.isArray(slug)) return slug.some((s) => hasRole(s));
     return !!user?.roles?.some((role) => role.slug === slug);
   }

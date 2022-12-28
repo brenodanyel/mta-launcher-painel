@@ -33,10 +33,16 @@ export function ProductCard(props: ProductCardProps) {
 
   async function handleDelete() {
     const key =
-      'yes, delete ' + productName.toLowerCase().replaceAll(/\s/g, '-');
+      'yes, delete ' +
+      productName.toLowerCase().replaceAll(/\s/g, '-') +
+      '-' +
+      Math.ceil(Math.random() * 10000).toString();
 
     await confirm({
       title: `Delete '${productName}'?`,
+      titleProps: {
+        textAlign: 'center',
+      },
       confirmationText: 'Delete',
       dialogProps: {
         maxWidth: 'xs',
@@ -46,7 +52,7 @@ export function ProductCard(props: ProductCardProps) {
         <Stack sx={{ textAlign: 'center', gap: '0.5em', mb: '0.5em' }}>
           <Typography>Are you sure you want to delete this product?</Typography>
           <Typography fontSize='0.8em'>
-            Note that This action cannot be undone!
+            Note that this action cannot be undone!
           </Typography>
           <Typography fontSize='0.8em'>
             {`Please type "${key}" to confirm.`}

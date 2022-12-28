@@ -108,10 +108,40 @@ export function useMyProducts() {
     }
   }
 
+
+  async function deleteServerProfile(id: string) {
+    try {
+      setLoading(true);
+
+      const { status, data } = await axiosInstance({
+        url: `/server-profile/${id}`,
+        method: 'delete',
+      });
+
+      if (status !== 200) {
+        if (data.errors) {
+          for (const error of data.errors) {
+            toast.error(error.message);
+          }
+          return;
+        }
+        throw new Error('Error deleting server profile');
+      }
+
+      await refetch();
+
+      productDialogStore.setOpen(false);
+      toast.success('Server profile deleted successfully');
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return {
     serverProfiles,
     isLoading,
     fetchMyServerProfiles,
     updateServerProfile,
+    deleteServerProfile,
   };
 }
