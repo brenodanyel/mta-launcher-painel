@@ -8,7 +8,7 @@ type FileInputProps = {
   setValue: (value: FileInputProps['value']) => void;
   title: string;
   accept?: string;
-  blob: Blob | null;
+  blob?: Blob | null;
   setBlob: (blob: FileInputProps['blob']) => void;
 };
 
@@ -63,8 +63,8 @@ export function FileInput(props: FileInputProps) {
           src={value}
           alt={title}
           style={{
-            width: '128px',
-            height: '128px',
+            width: '64px',
+            height: '64px',
             objectFit: 'cover',
             borderRadius: '10px',
           }}

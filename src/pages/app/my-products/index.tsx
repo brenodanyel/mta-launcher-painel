@@ -71,6 +71,7 @@ export function MyProducts() {
                         },
                         ...(hasRole('admin')
                           ? [
+                              { key: '-'.repeat(20), value: '-'.repeat(20) },
                               {
                                 key: 'OWNER USERNAME:',
                                 value: serverProfile.owner?.username,

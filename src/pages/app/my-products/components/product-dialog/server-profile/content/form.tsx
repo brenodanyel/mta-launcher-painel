@@ -87,21 +87,19 @@ export function ProductInfoForm() {
         />
       </Grid>
       <Grid xs={12}>
-        <Box sx={{ overflow: 'hidden' }}>
-          <FileInput
-            title='IMAGE (128x128)'
-            disabled={mode === 'view'}
-            value={formData.logo}
-            accept='image/png,image/jpeg,image/jpg'
-            setValue={(value) => {
-              updateFormDataItem('logo', value);
-            }}
-            blob={formData.logoBlob}
-            setBlob={(blob) => {
-              updateFormDataItem('logoBlob', blob);
-            }}
-          />
-        </Box>
+        <FileInput
+          title='IMAGE (128x128)'
+          disabled={mode === 'view'}
+          value={formData.logo}
+          accept='image/png,image/jpeg,image/jpg'
+          setValue={(value) => {
+            updateFormDataItem('logo', value);
+          }}
+          blob={formData.logoBlob}
+          setBlob={(blob) => {
+            updateFormDataItem('logoBlob', blob);
+          }}
+        />
       </Grid>
       <Grid xs={12}>
         <TextField

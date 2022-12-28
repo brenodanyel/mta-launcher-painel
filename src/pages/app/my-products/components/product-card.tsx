@@ -7,12 +7,12 @@ import {
   Typography,
   IconButton,
   Tooltip,
-  Link,
+  Divider,
+  Box,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Link as RouterLink } from 'react-router-dom';
-import { ReactNode } from 'react';
+import { Fragment } from 'react';
 
 type ProductCardProps = {
   productName: string;
@@ -29,18 +29,19 @@ export function ProductCard(props: ProductCardProps) {
       <CardHeader title={productName.toUpperCase()} />
       <CardContent>
         {productContent.map((content) => (
-          <Stack
-            direction='row'
-            justifyContent='space-between'
-            gap='1em'
-            flexWrap='wrap'
-            key={content.key}
-          >
-            <Typography fontSize='0.85em'>{content.key}</Typography>
-            <Tooltip title={content.tooltip} arrow>
-              <Typography fontSize='0.85em'>{content.value}</Typography>
-            </Tooltip>
-          </Stack>
+          <Fragment key={content.key}>
+            <Stack
+              direction='row'
+              justifyContent='space-between'
+              gap='1em'
+              flexWrap='wrap'
+            >
+              <Typography fontSize='0.85em'>{content.key}</Typography>
+              <Tooltip title={content.tooltip} arrow>
+                <Typography fontSize='0.85em'>{content.value}</Typography>
+              </Tooltip>
+            </Stack>
+          </Fragment>
         ))}
       </CardContent>
       <Stack>
