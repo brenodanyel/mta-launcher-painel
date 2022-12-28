@@ -12,7 +12,7 @@ import { useMyProductsFilterStore } from './store';
 import { useAuth } from '@/hooks/useAuth';
 
 export function MyProductsFilter() {
-  const myProductsFilterStore = useMyProductsFilterStore();
+  const { filters, setFilters } = useMyProductsFilterStore();
   const { hasRole } = useAuth();
 
   return (
@@ -23,28 +23,39 @@ export function MyProductsFilter() {
       }}
     >
       <AccordionSummary expandIcon={<Icon color='disabled'>expand_more</Icon>}>
-        <Stack direction='row' gap='0.5em'>
+        <Stack direction='row' sx={{ alignItems: 'center', gap: '0.5em' }}>
           <Icon>search</Icon>
-          <Typography>Filters: </Typography>
+          <Typography variant='h6'>
+            Filters: {Object.values(filters).filter((v) => !!v).length || ''}
+          </Typography>
         </Stack>
       </AccordionSummary>
       <AccordionDetails>
         <Grid container spacing='0.5em'>
-          <Grid xs={12} sm={8}>
+          <Grid xs={12} sm={3}>
+            <TextField
+              label='Product ID'
+              value={filters.id}
+              onChange={(e) => {
+                setFilters({ ...filters, id: e.target.value });
+              }}
+            />
+          </Grid>
+          <Grid xs={12} sm={5}>
             <TextField
               label='Server IP'
-              value={myProductsFilterStore.serverIP}
+              value={filters.serverIP}
               onChange={(e) => {
-                myProductsFilterStore.setServerIP(e.target.value);
+                setFilters({ ...filters, serverIP: e.target.value });
               }}
             />
           </Grid>
           <Grid xs={12} sm={4}>
             <TextField
               label='Server Port'
-              value={myProductsFilterStore.serverPort}
+              value={filters.serverPort}
               onChange={(e) => {
-                myProductsFilterStore.setServerPort(e.target.value);
+                setFilters({ ...filters, serverPort: e.target.value });
               }}
             />
           </Grid>
@@ -53,18 +64,18 @@ export function MyProductsFilter() {
               <Grid xs={12} sm={6}>
                 <TextField
                   label='Username'
-                  value={myProductsFilterStore.username}
+                  value={filters.username}
                   onChange={(e) => {
-                    myProductsFilterStore.setUsername(e.target.value);
+                    setFilters({ ...filters, username: e.target.value });
                   }}
                 />
               </Grid>
               <Grid xs={12} sm={6}>
                 <TextField
                   label='Email'
-                  value={myProductsFilterStore.email}
+                  value={filters.email}
                   onChange={(e) => {
-                    myProductsFilterStore.setEmail(e.target.value);
+                    setFilters({ ...filters, email: e.target.value });
                   }}
                 />
               </Grid>

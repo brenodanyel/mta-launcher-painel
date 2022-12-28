@@ -14,7 +14,7 @@ export function HelpIcon() {
     >
       <Tooltip title='Support'>
         <Fab variant='circular' color='primary'>
-          <Icon>help_center</Icon>
+          <Icon>question_mark</Icon>
         </Fab>
       </Tooltip>
     </Link>

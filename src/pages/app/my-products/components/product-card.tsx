@@ -10,11 +10,13 @@ import {
   Fade,
   Link,
   Icon,
+  Box,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { Fragment } from 'react';
 
 type ProductCardProps = {
+  productId: string;
   productName: string;
   productContent: { key: string; value: string; tooltip?: string }[];
   onClickView: () => void;
@@ -22,13 +24,40 @@ type ProductCardProps = {
 };
 
 export function ProductCard(props: ProductCardProps) {
-  const { productName, productContent, onClickEdit, onClickView } = props;
+  const { productName, productContent, onClickEdit, onClickView, productId } =
+    props;
 
   return (
     <Fade in>
       <Card sx={{ width: '100%', height: '100%' }}>
         <CardHeader
-          title={productName.toUpperCase()}
+          title={
+            <Stack
+              direction='row'
+              sx={{
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                gap: '1em',
+              }}
+            >
+              <Typography variant='h5' sx={{ whiteSpace: 'nowrap' }}>
+                {productName.toUpperCase()}
+              </Typography>
+              <Tooltip title={productId}>
+                <Typography
+                  variant='caption'
+                  noWrap
+                  sx={{
+                    width: '75px',
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                  }}
+                >
+                  #{productId}
+                </Typography>
+              </Tooltip>
+            </Stack>
+          }
           subheader={
             <Link
               component={RouterLink}

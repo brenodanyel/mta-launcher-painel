@@ -54,6 +54,7 @@ export function MyProducts() {
                     }}
                   >
                     <ProductCard
+                      productId={serverProfile.id}
                       productName='Server Profile'
                       productContent={[
                         {

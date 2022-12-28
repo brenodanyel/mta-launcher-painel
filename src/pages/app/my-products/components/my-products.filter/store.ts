@@ -2,36 +2,32 @@ import create from 'zustand';
 import { ServerProfile } from '../../hooks/useMyProducts';
 
 type State = {
-  serverIP: string;
-  setServerIP: (serverIP: State['serverIP']) => void;
+  filters: {
+    serverIP: string;
+    serverPort: string;
+    username: string;
+    email: string;
+    id: string;
+  };
 
-  serverPort: string;
-  setServerPort: (serverPort: State['serverPort']) => void;
-
-  username: string;
-  setUsername: (username: State['username']) => void;
-
-  email: string;
-  setEmail: (email: State['email']) => void;
+  setFilters: (filters: State['filters']) => void;
 
   filter(input: ServerProfile): boolean;
 };
 
 export const useMyProductsFilterStore = create<State>((set, get) => ({
-  serverIP: '',
-  setServerIP: (serverIP) => set({ serverIP }),
+  filters: {
+    serverIP: '',
+    serverPort: '',
+    username: '',
+    email: '',
+    id: '',
+  },
 
-  serverPort: '',
-  setServerPort: (serverPort) => set({ serverPort }),
-
-  username: '',
-  setUsername: (username) => set({ username }),
-
-  email: '',
-  setEmail: (email) => set({ email }),
+  setFilters: (filters) => set({ filters }),
 
   filter: (input) => {
-    const { serverIP, serverPort, username, email } = get();
+    const { serverIP, serverPort, username, email, id } = get().filters;
 
     if (serverIP) {
       if (!input.ip.startsWith(serverIP)) {
@@ -53,6 +49,12 @@ export const useMyProductsFilterStore = create<State>((set, get) => ({
 
     if (email) {
       if (!input.owner.email.startsWith(email)) {
+        return false;
+      }
+    }
+
+    if (id) {
+      if (!input.id.startsWith(id)) {
         return false;
       }
     }
