@@ -9,12 +9,9 @@ import {
   Stack,
   Checkbox,
   FormControlLabel,
+  Icon,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SaveIcon from '@mui/icons-material/Save';
-import AddIcon from '@mui/icons-material/Add';
 import { useProductsDialogStore } from '../hooks/useProductsDialogStore';
 import { useAllProducts } from '../hooks/useAllProducts';
 import { useState } from 'react';
@@ -86,7 +83,7 @@ export function ProductDialog() {
         style={{ display: 'flex', flexDirection: 'column', gap: '1em' }}
       >
         <Stack direction='row' sx={{ alignItems: 'center', gap: '0.5em' }}>
-          <EditIcon />
+          <Icon>edit</Icon>
           <Typography variant='h5'>
             {action === 'create' ? 'Create new product' : 'Edit product'}
           </Typography>
@@ -146,7 +143,7 @@ export function ProductDialog() {
                           });
                         }}
                       >
-                        <DeleteIcon />
+                        <Icon>delete</Icon>
                       </IconButton>
                     </Tooltip>
                   ),
@@ -168,7 +165,7 @@ export function ProductDialog() {
           ))}
           <Grid xs={12}>
             <Button
-              startIcon={<AddIcon />}
+              startIcon={<Icon>add</Icon>}
               onClick={() => {
                 setFormData({
                   ...formData,
@@ -204,7 +201,7 @@ export function ProductDialog() {
         </Grid>
         <LoadingButton
           sx={{ marginLeft: 'auto' }}
-          startIcon={<SaveIcon />}
+          startIcon={<Icon>save</Icon>}
           disabled={disableSaveButton()}
           type='submit'
           loading={isSaving}

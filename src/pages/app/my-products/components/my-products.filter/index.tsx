@@ -4,9 +4,10 @@ import {
   AccordionDetails,
   Typography,
   Unstable_Grid2 as Grid,
+  Icon,
   TextField,
+  Stack,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useMyProductsFilterStore } from './store';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -21,8 +22,11 @@ export function MyProductsFilter() {
         borderRadius: '4px',
       }}
     >
-      <AccordionSummary expandIcon={<ExpandMoreIcon color='disabled' />}>
-        <Typography>Filters: </Typography>
+      <AccordionSummary expandIcon={<Icon color='disabled'>expand_more</Icon>}>
+        <Stack direction='row' gap='0.5em'>
+          <Icon>search</Icon>
+          <Typography>Filters: </Typography>
+        </Stack>
       </AccordionSummary>
       <AccordionDetails>
         <Grid container spacing='0.5em'>

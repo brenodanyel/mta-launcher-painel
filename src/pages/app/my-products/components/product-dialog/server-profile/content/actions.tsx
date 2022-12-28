@@ -1,9 +1,5 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Button, Icon, Stack, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import EditIcon from '@mui/icons-material/Edit';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Cancel';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { useProductDialogStore } from '../../product-dialog.store';
 import { useServerProfileStore } from '../server-profile.store';
 import { useMyProducts } from '../../../../hooks/useMyProducts';
@@ -104,7 +100,7 @@ export function ProductInfoActions() {
           <>
             {hasRole('admin') && (
               <Button
-                startIcon={<DeleteIcon />}
+                startIcon={<Icon>delete</Icon>}
                 color='error'
                 onClick={() => {
                   handleDelete();
@@ -114,7 +110,7 @@ export function ProductInfoActions() {
               </Button>
             )}
             <Button
-              startIcon={<EditIcon />}
+              startIcon={<Icon>edit</Icon>}
               onClick={() => {
                 productDialogStore.setMode('edit');
               }}
@@ -127,7 +123,7 @@ export function ProductInfoActions() {
           <>
             <Button
               color='error'
-              startIcon={<CancelIcon />}
+              startIcon={<Icon>cancel</Icon>}
               onClick={() => {
                 productDialogStore.setMode('view');
                 resetFormData();
@@ -137,7 +133,7 @@ export function ProductInfoActions() {
             </Button>
             <LoadingButton
               variant='contained'
-              startIcon={<SaveIcon />}
+              startIcon={<Icon>save</Icon>}
               disabled={disableSave()}
               loading={isLoading}
               onClick={() => {

@@ -1,6 +1,4 @@
-import { Stack, IconButton, Tooltip } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Stack, IconButton, Tooltip, Icon } from '@mui/material';
 
 type ProductCardAdminActionsProps = {
   onClickEdit(): void;
@@ -21,12 +19,12 @@ export function ProductCardAdminActions(props: ProductCardAdminActionsProps) {
     >
       <Tooltip title='Edit'>
         <IconButton onClick={onClickEdit}>
-          <EditIcon />
+          <Icon>edit</Icon>
         </IconButton>
       </Tooltip>
       <Tooltip title='Delete'>
         <IconButton onClick={onClickDelete}>
-          <DeleteIcon />
+          <Icon>delete</Icon>
         </IconButton>
       </Tooltip>
     </Stack>

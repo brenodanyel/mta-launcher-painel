@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button } from '@mui/material';
-import CollectionsIcon from '@mui/icons-material/Collections';
+import { Button, Icon } from '@mui/material';
 
 type FileInputProps = {
   disabled?: boolean;
@@ -70,7 +69,7 @@ export function FileInput(props: FileInputProps) {
           }}
         />
       ) : (
-        <CollectionsIcon fontSize='large' />
+        <Icon fontSize='large'>collections</Icon>
       )}
       <input
         hidden

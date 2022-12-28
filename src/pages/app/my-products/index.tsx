@@ -1,6 +1,5 @@
 import moment from 'moment';
-import { Box, Stack, Typography } from '@mui/material';
-import InventoryIcon from '@mui/icons-material/Inventory';
+import { Box, Icon, Stack, Typography } from '@mui/material';
 import { ProductCard } from './components/product-card';
 import { ProductDialog } from './components/product-dialog';
 import { useMyProducts } from './hooks/useMyProducts';
@@ -27,7 +26,7 @@ export function MyProducts() {
     <>
       <Stack gap='0.5em'>
         <Stack direction='row' alignItems='center' gap='0.5em'>
-          <InventoryIcon />
+          <Icon>inventory</Icon>
           <Typography variant='h6' whiteSpace='nowrap'>
             My Products
           </Typography>

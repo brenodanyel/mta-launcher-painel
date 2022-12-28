@@ -1,5 +1,12 @@
-import { Stack, Typography, Box, Button, Link, Paper } from '@mui/material';
-import ReplyIcon from '@mui/icons-material/Reply';
+import {
+  Stack,
+  Typography,
+  Box,
+  Button,
+  Link,
+  Paper,
+  Icon,
+} from '@mui/material';
 import MuiMarkdown from 'mui-markdown';
 import { useServerProfileStore } from './server-profile.store';
 
@@ -54,7 +61,7 @@ function PreviewContent() {
                 <Button
                   variant='outlined'
                   size='small'
-                  startIcon={<ReplyIcon />}
+                  startIcon={<Icon>reply</Icon>}
                 >
                   {link.name}
                 </Button>

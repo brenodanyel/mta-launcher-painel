@@ -1,9 +1,7 @@
-import { Paper, Stack, Typography, Button } from '@mui/material';
+import { Paper, Stack, Typography, Button, Icon } from '@mui/material';
 import { useConfirm } from 'material-ui-confirm';
 import { useAuth } from '@/hooks/useAuth';
 import { ProductCardAdminActions } from './product-card.admin-actions';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import ErrorIcon from '@mui/icons-material/ErrorOutline';
 import { useProductsDialogStore } from '../../hooks/useProductsDialogStore';
 import { useAllProducts } from '../../hooks/useAllProducts';
 
@@ -102,9 +100,9 @@ export function ProductCard(props: ProductCardProps) {
             <Typography variant='caption'>/MONTH</Typography>
           </Stack>
           {productActive ? (
-            <Button startIcon={<ShoppingCartIcon />}>BUY</Button>
+            <Button startIcon={<Icon>shopping_cart</Icon>}>BUY</Button>
           ) : (
-            <Button startIcon={<ErrorIcon />} disabled>
+            <Button startIcon={<Icon>error</Icon>} disabled>
               UNAVAILABLE
             </Button>
           )}

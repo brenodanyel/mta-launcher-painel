@@ -8,9 +8,10 @@ import {
   IconButton,
   Tooltip,
   Fade,
+  Link,
+  Icon,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Link as RouterLink } from 'react-router-dom';
 import { Fragment } from 'react';
 
 type ProductCardProps = {
@@ -26,7 +27,20 @@ export function ProductCard(props: ProductCardProps) {
   return (
     <Fade in>
       <Card sx={{ width: '100%', height: '100%' }}>
-        <CardHeader title={productName.toUpperCase()} />
+        <CardHeader
+          title={productName.toUpperCase()}
+          subheader={
+            <Link
+              component={RouterLink}
+              to='#'
+              color='success.dark'
+              underline='hover'
+              variant='caption'
+            >
+              ADD + 30 DAYS
+            </Link>
+          }
+        />
         <CardContent>
           {productContent.map((content) => (
             <Fragment key={content.key}>
@@ -48,12 +62,12 @@ export function ProductCard(props: ProductCardProps) {
           <CardActions sx={{ justifyContent: 'center' }}>
             <Tooltip title='Edit' arrow>
               <IconButton onClick={onClickEdit}>
-                <EditIcon fontSize='large' />
+                <Icon fontSize='large'>edit</Icon>
               </IconButton>
             </Tooltip>
             <Tooltip title='View' arrow>
               <IconButton onClick={onClickView}>
-                <VisibilityIcon fontSize='large' />
+                <Icon fontSize='large'>visibility</Icon>
               </IconButton>
             </Tooltip>
           </CardActions>

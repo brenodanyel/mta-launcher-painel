@@ -6,10 +6,9 @@ import {
   Container,
   Button,
   Link,
+  Icon,
 } from '@mui/material';
 import { Link as RouterLink, useLocation, matchPath } from 'react-router-dom';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import InventoryIcon from '@mui/icons-material/Inventory';
 import { HamburguerMenu } from './hamburguer-menu';
 import { ProfileIcon } from './profile-icon';
 
@@ -17,12 +16,12 @@ export const pages = [
   {
     name: 'My Products',
     href: '/',
-    icon: <InventoryIcon color='disabled' />,
+    icon: <Icon color='disabled'>inventory</Icon>,
   },
   {
     name: 'All Products',
     href: '/all-products',
-    icon: <ShoppingCartIcon color='disabled' />,
+    icon: <Icon color='disabled'>shopping_cart</Icon>,
   },
 ];
 

@@ -9,13 +9,12 @@ import {
   Tooltip,
   Typography,
   Box,
+  Icon,
 } from '@mui/material';
 import { useProductDialogStore } from '../../product-dialog.store';
 import { useServerProfileStore } from '../server-profile.store';
 import { FileInput } from '@/components/file-input';
 
-import DeleteIcon from '@mui/icons-material/Delete';
-import InfoIcon from '@mui/icons-material/Info';
 import { Fragment } from 'react';
 
 const descriptionHelperTooltip = (
@@ -45,7 +44,7 @@ const descriptionHelperTooltip = (
       </Stack>
     }
   >
-    <InfoIcon />
+    <Icon>info</Icon>
   </Tooltip>
 );
 
@@ -175,7 +174,7 @@ export function ProductInfoForm() {
                       );
                     }}
                   >
-                    <DeleteIcon />
+                    <Icon>delete</Icon>
                   </IconButton>
                 ),
               }}

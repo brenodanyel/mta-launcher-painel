@@ -1,9 +1,7 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Box, Button, Icon, Stack, Typography } from '@mui/material';
 import { useAllProducts } from './hooks/useAllProducts';
 import { ProductCard } from './components/product-card';
 import { ProductDialog } from './components/product-dialog';
-import AddIcon from '@mui/icons-material/Add';
 import { useAuth } from '@/hooks/useAuth';
 import { useProductsDialogStore } from './hooks/useProductsDialogStore';
 
@@ -24,7 +22,7 @@ export function AllProducts() {
         }}
       >
         <Stack direction='row' sx={{ alignItems: 'center', gap: '0.5em' }}>
-          <ShoppingCartIcon />
+          <Icon>shopping_cart</Icon>
           <Typography variant='h6' whiteSpace='nowrap'>
             All Products
           </Typography>
@@ -32,7 +30,7 @@ export function AllProducts() {
 
         {hasRole('admin') && (
           <Button
-            startIcon={<AddIcon />}
+            startIcon={<Icon>add</Icon>}
             onClick={() => {
               productsDialogStore.setFormData({
                 name: '',

@@ -1,5 +1,4 @@
-import HelpCenterIcon from '@mui/icons-material/QuestionMark';
-import { Fab, Link, Tooltip } from '@mui/material';
+import { Fab, Link, Tooltip, Icon } from '@mui/material';
 
 export function HelpIcon() {
   return (
@@ -15,7 +14,7 @@ export function HelpIcon() {
     >
       <Tooltip title='Support'>
         <Fab variant='circular' color='primary'>
-          <HelpCenterIcon />
+          <Icon>help_center</Icon>
         </Fab>
       </Tooltip>
     </Link>

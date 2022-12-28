@@ -6,10 +6,10 @@ import {
   ListItemText,
   Menu,
   MenuItem,
+  Icon,
 } from '@mui/material';
 import { pages } from '@/components/header';
 import { Link as RouterLink, useLocation, matchPath } from 'react-router-dom';
-import MenuIcon from '@mui/icons-material/Menu';
 
 export function HamburguerMenu() {
   const { pathname } = useLocation();
@@ -24,7 +24,7 @@ export function HamburguerMenu() {
         ref={anchorRef}
         color='inherit'
       >
-        <MenuIcon />
+        <Icon>menu</Icon>
       </IconButton>
 
       <Menu

@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { IconButton, TextField, TextFieldProps } from '@mui/material';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { IconButton, TextField, TextFieldProps, Icon } from '@mui/material';
 
 export function PasswordInput(props: TextFieldProps) {
   const [type, setType] = useState('password');
@@ -18,7 +16,7 @@ export function PasswordInput(props: TextFieldProps) {
         ...props.InputProps,
         endAdornment: (
           <IconButton onClick={handleClick} size='small'>
-            {type === 'password' ? <Visibility /> : <VisibilityOff />}
+            <Icon>{type === 'password' ? 'visibility' : 'visibility_off'}</Icon>
           </IconButton>
         ),
       }}
