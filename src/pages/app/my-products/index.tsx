@@ -8,8 +8,9 @@ import { useServerProfileStore } from './components/product-dialog/server-profil
 import { MyProductsFilter } from './components/my-products.filter';
 import { useMyProductsFilterStore } from './components/my-products.filter/store';
 import { useAuth } from '@/hooks/useAuth';
+import Button from '@mui/material/Button';
 
-export function convertExpiresIn(removeAt: string | null) {
+export function convertExpiresIn(removeAt: Date | null) {
   if (!removeAt) return 'NEVER';
   return moment(removeAt).fromNow().toUpperCase();
 }
@@ -25,11 +26,37 @@ export function MyProducts() {
   return (
     <>
       <Stack gap='0.5em'>
-        <Stack direction='row' alignItems='center' gap='0.5em'>
-          <Icon>inventory</Icon>
-          <Typography variant='h6' whiteSpace='nowrap'>
-            My Products
-          </Typography>
+        <Stack direction="row" sx={{ justifyContent: 'space-between' }}>
+          <Stack direction='row' sx={{ alignItems: 'center', gap: '0.5em' }}>
+            <Icon>inventory</Icon>
+            <Typography variant='h6' whiteSpace='nowrap'>
+              My Products
+            </Typography>
+          </Stack>
+          {hasRole('admin') && (
+            <Button
+              startIcon={<Icon>add</Icon>}
+              onClick={() => {
+                productDialogStore.setProductName('Server Profile');
+                productDialogStore.setProductId('');
+                productDialogStore.setMode('create');
+                productDialogStore.setOpen(true);
+                serverProfileStore.setInitialFormData({
+                  logoBlob: undefined,
+                  ip: '',
+                  port: '',
+                  description: '',
+                  logo: '',
+                  links: [],
+                  ownerId: undefined,
+                  removeAt: null,
+                });
+                serverProfileStore.resetFormData();
+              }}
+            >
+              Create
+            </Button>
+          )}
         </Stack>
         <Stack direction='row' flexWrap='wrap' gap='0.5em'>
           {serverProfiles.length === 0 ? (

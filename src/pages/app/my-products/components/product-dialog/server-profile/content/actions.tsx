@@ -9,8 +9,7 @@ import { useAuth } from '@/hooks/useAuth';
 export function ProductInfoActions() {
   const confirm = useConfirm();
   const { hasRole } = useAuth();
-  const { updateServerProfile, deleteServerProfile, isLoading } =
-    useMyProducts();
+  const { updateServerProfile, deleteServerProfile, createServerProfile, isLoading } = useMyProducts();
   const productDialogStore = useProductDialogStore();
   const { errors, formData, resetFormData } = useServerProfileStore();
 
@@ -26,11 +25,20 @@ export function ProductInfoActions() {
     });
   }
 
+  async function handleCreate() {
+    await createServerProfile({
+      ip: formData.ip,
+      port: formData.port,
+      description: formData.description,
+      externalLinks: formData.links,
+      logoBlob: formData.logoBlob,
+      ownerId: formData.ownerId,
+      removeAt: formData.removeAt,
+    });
+  }
+
   async function handleDelete() {
-    const key =
-      'yes, delete this server profile' +
-      ' ' +
-      Math.ceil(Math.random() * 10000).toString();
+    const key = 'yes, delete this server profile' + ' ' + Math.ceil(Math.random() * 10000).toString();
 
     await confirm({
       title: 'Delete server profile?',
@@ -106,6 +114,22 @@ export function ProductInfoActions() {
           gap: '1em',
         }}
       >
+        {productDialogStore.mode === 'create' && (
+          <>
+            <LoadingButton
+              variant='contained'
+              startIcon={<Icon>add</Icon>}
+              disabled={disableSave()}
+              loading={isLoading}
+              onClick={() => {
+                console.log('create');
+                handleCreate();
+              }}
+            >
+              Create
+            </LoadingButton>
+          </>
+        )}
         {productDialogStore.mode === 'view' && (
           <>
             {hasRole('admin') && (

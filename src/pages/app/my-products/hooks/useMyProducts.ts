@@ -82,7 +82,10 @@ export function useMyProducts() {
       );
       formData.append('active', overrides.active ? 'true' : 'false');
       formData.append('ownerId', overrides.ownerId ?? '');
-      formData.append('removeAt', overrides.removeAt?.toISOString() ?? '');
+
+      if (overrides.removeAt) {
+        formData.append('removeAt', new Date(overrides.removeAt).toISOString() ?? '');
+      }
 
       const { status, data } = await axiosInstance({
         url: `/server-profile/${id}`,
@@ -112,6 +115,63 @@ export function useMyProducts() {
     }
   }
 
+  async function createServerProfile(
+    overrides: {
+      ip?: string;
+      port?: string;
+      description?: string;
+      logoBlob?: Blob;
+      externalLinks?: { id: string; name: string; url: string; }[];
+      active?: boolean;
+      ownerId?: string;
+      removeAt?: Date | null;
+    },
+  ) {
+    try {
+      setLoading(true);
+
+      const formData = new FormData();
+      formData.append('ip', overrides.ip ?? '');
+      formData.append('port', overrides.port ?? '');
+      formData.append('description', overrides.description ?? '');
+      if (overrides.logoBlob) {
+        formData.append('logo', overrides.logoBlob);
+      }
+      formData.append('externalLinks', JSON.stringify(overrides.externalLinks ?? []));
+      formData.append('active', overrides.active ? 'true' : 'false');
+      formData.append('ownerId', overrides.ownerId ?? '');
+
+      if (overrides.removeAt) {
+        formData.append('removeAt', new Date(overrides.removeAt).toISOString() ?? '');
+      }
+
+      const { status, data } = await axiosInstance({
+        url: `/server-profile/`,
+        method: 'post',
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (status !== 201) {
+        if (data.errors) {
+          for (const error of data.errors) {
+            toast.error(error.message);
+          }
+          return;
+        }
+        throw new Error('Error creating server profile');
+      }
+
+      await refetch();
+
+      productDialogStore.setOpen(false);
+      toast.success('Server profile created successfully');
+    } finally {
+      setLoading(false);
+    }
+  }
 
   async function deleteServerProfile(id: string) {
     try {
@@ -146,6 +206,7 @@ export function useMyProducts() {
     isLoading,
     fetchMyServerProfiles,
     updateServerProfile,
+    createServerProfile,
     deleteServerProfile,
   };
 }

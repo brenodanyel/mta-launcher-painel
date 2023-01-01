@@ -2,7 +2,7 @@ import create from 'zustand';
 
 type State = {
   open: boolean;
-  mode: 'view' | 'edit';
+  mode: 'view' | 'edit' | 'create';
   productName: string;
   productId: string;
 };

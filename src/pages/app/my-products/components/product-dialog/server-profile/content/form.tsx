@@ -253,7 +253,7 @@ export function ProductInfoForm() {
               disabled={mode === 'view'}
               value={link.url}
               InputProps={{
-                endAdornment: mode === 'edit' && (
+                endAdornment: mode !== 'view' && (
                   <IconButton
                     sx={{
                       padding: 0,
@@ -289,7 +289,7 @@ export function ProductInfoForm() {
           )}
         </Fragment>
       ))}
-      {mode === 'edit' && (
+      {mode !== 'view' && (
         <Grid xs={12}>
           <Button
             fullWidth

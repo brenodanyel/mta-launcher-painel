@@ -70,21 +70,20 @@ export const useServerProfileStore = create<State>((set, get) => ({
   errors: {
     ip() {
       const { formData } = get();
-      if (formData.ip && !validator.isIP(formData.ip)) {
-        return 'Invalid IP';
-      }
+      if (!formData.ip) return 'Required';
+      if (!validator.isIP(formData.ip)) return 'Invalid IP';
     },
     port() {
       const { formData } = get();
-      if (formData.port && !validator.isPort(String(formData.port))) {
+      if (!formData.port) return 'Required';
+      if (!validator.isPort(String(formData.port))) {
         return 'Invalid Port';
       }
     },
     description() {
       const { formData, MAX_CHARACTERS_DESCRIPTION } = get();
       if (formData.description.length > MAX_CHARACTERS_DESCRIPTION) {
-        return `Max ${MAX_CHARACTERS_DESCRIPTION} characters (${MAX_CHARACTERS_DESCRIPTION - formData.description.length
-          })`;
+        return `Max ${MAX_CHARACTERS_DESCRIPTION} characters (${MAX_CHARACTERS_DESCRIPTION - formData.description.length})`;
       }
     },
     linkName(name: string) {
@@ -94,19 +93,14 @@ export const useServerProfileStore = create<State>((set, get) => ({
     },
     linkUrl(url: string) {
       if (!url) return 'Required';
-      if (!validator.isURL(url)) {
-        return 'Invalid URL';
-      }
+      if (!validator.isURL(url)) return 'Invalid URL';
     },
     ownerId() {
       const { formData } = get();
-      if (!formData.ownerId) {
-        return 'Required';
-      }
+      if (!formData.ownerId) return 'Required';
     },
     removeAt() {
       const { formData } = get();
-
       if (formData.removeAt && !moment(formData.removeAt).isValid()) {
         return 'Date is invalid';
       }
