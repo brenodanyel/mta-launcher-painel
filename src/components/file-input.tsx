@@ -59,7 +59,7 @@ export function FileInput(props: FileInputProps) {
       {title}
       {value ? (
         <img
-          src={value}
+          src={blob ? value : value + '?' + Date.now()}
           alt={title}
           style={{
             width: '64px',
