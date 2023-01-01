@@ -43,7 +43,7 @@ export function AllProducts() {
               productsDialogStore.setOpen(true);
             }}
           >
-            Create Product
+            Create
           </Button>
         )}
       </Stack>

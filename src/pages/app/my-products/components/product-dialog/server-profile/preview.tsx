@@ -99,6 +99,7 @@ function PreviewContent() {
         sx={{
           overflow: 'auto',
           padding: '0.5em',
+          flexGrow: 1,
         }}
         elevation={0}
         variant='outlined'
