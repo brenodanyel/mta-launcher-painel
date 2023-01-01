@@ -73,16 +73,16 @@ export function MyProducts() {
                         },
                         ...(hasRole('admin')
                           ? [
-                              { key: '-'.repeat(20), value: '-'.repeat(20) },
-                              {
-                                key: 'OWNER USERNAME:',
-                                value: serverProfile.owner?.username,
-                              },
-                              {
-                                key: 'OWNER EMAIL:',
-                                value: serverProfile.owner?.email,
-                              },
-                            ]
+                            { key: '-'.repeat(20), value: '-'.repeat(20) },
+                            {
+                              key: 'OWNER USERNAME:',
+                              value: serverProfile.owner?.username,
+                            },
+                            {
+                              key: 'OWNER EMAIL:',
+                              value: serverProfile.owner?.email,
+                            },
+                          ]
                           : []),
                       ]}
                       onClickEdit={() => {
@@ -97,6 +97,8 @@ export function MyProducts() {
                           description: serverProfile.description,
                           logo: serverProfile.logo,
                           links: serverProfile.externalLinks,
+                          ownerId: serverProfile.ownerId,
+                          removeAt: serverProfile.removeAt,
                         });
                         serverProfileStore.resetFormData();
                       }}
@@ -112,6 +114,8 @@ export function MyProducts() {
                           description: serverProfile.description,
                           logo: serverProfile.logo,
                           links: serverProfile.externalLinks,
+                          ownerId: serverProfile.ownerId,
+                          removeAt: serverProfile.removeAt,
                         });
                         serverProfileStore.resetFormData();
                       }}

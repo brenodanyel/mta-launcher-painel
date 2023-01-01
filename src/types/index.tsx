@@ -4,8 +4,9 @@ export type Link = {
 };
 
 export type User = {
-  id: number;
+  id: string;
   username: string;
+  email: string;
   roles: Role[];
 };
 

@@ -13,7 +13,7 @@ export type ServerProfile = {
   externalLinks: { id: string; name: string; url: string; }[];
   active: boolean;
   createdAt: string;
-  removeAt: string | null;
+  removeAt: Date | null;
   ownerId: string;
   owner: {
     id: string;
@@ -62,6 +62,8 @@ export function useMyProducts() {
       logoBlob?: Blob;
       externalLinks?: { id: string; name: string; url: string; }[];
       active?: boolean;
+      ownerId?: string;
+      removeAt?: Date | null;
     },
   ) {
     try {
@@ -79,6 +81,8 @@ export function useMyProducts() {
         JSON.stringify(overrides.externalLinks ?? []),
       );
       formData.append('active', overrides.active ? 'true' : 'false');
+      formData.append('ownerId', overrides.ownerId ?? '');
+      formData.append('removeAt', overrides.removeAt?.toISOString() ?? '');
 
       const { status, data } = await axiosInstance({
         url: `/server-profile/${id}`,

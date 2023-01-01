@@ -21,6 +21,8 @@ export function ProductInfoActions() {
       description: formData.description,
       externalLinks: formData.links,
       logoBlob: formData.logoBlob,
+      ownerId: formData.ownerId,
+      removeAt: formData.removeAt,
     });
   }
 
@@ -83,6 +85,14 @@ export function ProductInfoActions() {
       if (errors.linkUrl(link.url)) {
         return true;
       }
+    }
+
+    if (errors.ownerId()) {
+      return true;
+    }
+
+    if (errors.removeAt()) {
+      return true;
     }
 
     return false;

@@ -3,6 +3,7 @@ import { MUIWrapper } from '@/wrappers/mui.wrapper';
 import { ReactQueryWrapper } from '@/wrappers/react-query.wrapper';
 import { ConfirmProvider } from 'material-ui-confirm';
 import { Routes } from '@/wrappers/routes.wrapper';
+import { DateTimePickerProvider } from './wrappers/date-time-picker.wrapper';
 
 export function App() {
   return (
@@ -10,7 +11,9 @@ export function App() {
       <MUIWrapper>
         <ReactQueryWrapper>
           <ConfirmProvider>
-            <Routes />
+            <DateTimePickerProvider>
+              <Routes />
+            </DateTimePickerProvider>
           </ConfirmProvider>
         </ReactQueryWrapper>
       </MUIWrapper>

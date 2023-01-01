@@ -1,13 +1,13 @@
-import { Stack, Typography } from '@mui/material';
+import { Box, Divider, Stack, Typography } from '@mui/material';
 import { ProductInfoForm } from './form';
 import { ProductInfoActions } from './actions';
 
 export function ServerProfileInfo() {
   return (
-    <Stack sx={{ padding: '1em', flexDirection: 'column', gap: '1em' }}>
+    <Stack sx={{ padding: '1em', gap: '0.5em', height: '100%' }}>
       <Stack
+        direction="row"
         sx={{
-          flexDirection: 'row',
           gap: '1em',
           justifyContent: 'space-between',
         }}
@@ -17,7 +17,10 @@ export function ServerProfileInfo() {
         </Typography>
         <ProductInfoActions />
       </Stack>
-      <ProductInfoForm />
+      <Divider />
+      <Box sx={{ padding: '1em', overflow: 'auto' }}>
+        <ProductInfoForm />
+      </Box>
     </Stack>
   );
 }

@@ -13,18 +13,18 @@ function DialogContent() {
   const productDialogStore = useProductDialogStore();
 
   const theme = useTheme();
-  const md = useMediaQuery(theme.breakpoints.up('md'));
+  const lg = useMediaQuery(theme.breakpoints.up('lg'));
 
   if (productDialogStore.productName === 'Server Profile') {
     return (
-      <Grid container>
-        <Grid xs={12} md={7}>
+      <Grid container sx={{ height: '100%' }}>
+        <Grid xs={12} lg={6} sx={{ height: '100%' }}>
           <ServerProfileInfo />
         </Grid>
-        <Grid xs={md ? 0 : 12}>
-          <Divider orientation={md ? 'vertical' : 'horizontal'} />
+        <Grid xs={lg ? 0 : 12}>
+          <Divider orientation={lg ? 'vertical' : 'horizontal'} />
         </Grid>
-        <Grid xs={12} md={5}>
+        <Grid xs={12} lg={6} sx={{ height: '100%' }}>
           <ProductPreview />
         </Grid>
       </Grid>
@@ -41,9 +41,18 @@ export function ProductDialog() {
     <Dialog
       open={productDialogStore.open}
       onClose={() => productDialogStore.setOpen(false)}
-      maxWidth='lg'
+      maxWidth='xl'
       fullWidth
-      PaperProps={{ variant: 'outlined', elevation: 0 }}
+      PaperProps={{
+        variant: 'outlined',
+        elevation: 0,
+        sx: {
+          height: '100vh',
+        }
+      }}
+      sx={{
+        height: '100vh',
+      }}
     >
       <DialogContent />
     </Dialog>

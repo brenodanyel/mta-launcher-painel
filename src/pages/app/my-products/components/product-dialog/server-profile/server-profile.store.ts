@@ -1,4 +1,5 @@
 import validator from 'validator';
+import moment from 'moment';
 import create from 'zustand';
 
 type Link = {
@@ -15,6 +16,8 @@ type State = {
     links: Link[];
     logo: string;
     logoBlob?: Blob;
+    ownerId?: string;
+    removeAt?: Date | null;
   };
 
   initialFormData: State['formData'];
@@ -25,6 +28,8 @@ type State = {
     description(): string | void;
     linkName(name: string): string | void;
     linkUrl(url: string): string | void;
+    ownerId(): string | void;
+    removeAt(): string | void;
   };
 
   setFormData: (formData: State['formData']) => void;
@@ -44,6 +49,8 @@ export const useServerProfileStore = create<State>((set, get) => ({
     links: [],
     logo: '',
     logoBlob: undefined,
+    ownerId: undefined,
+    removeAt: undefined,
   },
 
   initialFormData: {
@@ -53,6 +60,8 @@ export const useServerProfileStore = create<State>((set, get) => ({
     links: [],
     logo: '',
     logoBlob: undefined,
+    ownerId: undefined,
+    removeAt: undefined,
   },
 
   MAX_CHARACTERS_DESCRIPTION: 6000,
@@ -74,9 +83,8 @@ export const useServerProfileStore = create<State>((set, get) => ({
     description() {
       const { formData, MAX_CHARACTERS_DESCRIPTION } = get();
       if (formData.description.length > MAX_CHARACTERS_DESCRIPTION) {
-        return `Max ${MAX_CHARACTERS_DESCRIPTION} characters (${
-          MAX_CHARACTERS_DESCRIPTION - formData.description.length
-        })`;
+        return `Max ${MAX_CHARACTERS_DESCRIPTION} characters (${MAX_CHARACTERS_DESCRIPTION - formData.description.length
+          })`;
       }
     },
     linkName(name: string) {
@@ -88,6 +96,19 @@ export const useServerProfileStore = create<State>((set, get) => ({
       if (!url) return 'Required';
       if (!validator.isURL(url)) {
         return 'Invalid URL';
+      }
+    },
+    ownerId() {
+      const { formData } = get();
+      if (!formData.ownerId) {
+        return 'Required';
+      }
+    },
+    removeAt() {
+      const { formData } = get();
+
+      if (formData.removeAt && !moment(formData.removeAt).isValid()) {
+        return 'Date is invalid';
       }
     },
   },

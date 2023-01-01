@@ -6,6 +6,7 @@ import {
   Link,
   Paper,
   Icon,
+  Divider,
 } from '@mui/material';
 import MuiMarkdown from 'mui-markdown';
 import { useServerProfileStore } from './server-profile.store';
@@ -19,10 +20,12 @@ function PreviewContent() {
         padding: '1em',
         display: 'flex',
         flexDirection: 'column',
-        overflow: 'hidden',
-        height: { xs: '70vh', md: '70vh' },
-        gap: '1em',
+        overflow: 'auto',
+        height: '100%',
+        gap: '0.5em',
       }}
+      elevation={0}
+      variant='outlined'
     >
       <Box
         sx={{
@@ -92,11 +95,13 @@ function PreviewContent() {
         </Box>
       </Box>
 
-      <Box
+      <Paper
         sx={{
           overflow: 'auto',
           padding: '0.5em',
         }}
+        elevation={0}
+        variant='outlined'
       >
         <MuiMarkdown
           options={{
@@ -132,17 +137,18 @@ function PreviewContent() {
         >
           {serverProfileStore.formData.description}
         </MuiMarkdown>
-      </Box>
+      </Paper>
     </Paper>
   );
 }
 
 export function ProductPreview() {
   return (
-    <Stack sx={{ padding: '1em', flexDirection: 'column', gap: '1em' }}>
+    <Stack sx={{ padding: '1em', flexDirection: 'column', gap: '0.5em', height: '100%' }}>
       <Typography variant='h6' fontSize='1.5em'>
         PREVIEW
       </Typography>
+      <Divider />
       <PreviewContent />
     </Stack>
   );
