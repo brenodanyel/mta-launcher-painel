@@ -55,7 +55,7 @@ export function Header() {
                 alignItems: 'center',
               }}
             >
-              MTASA Launcher
+              MTA Launcher
             </Typography>
 
             <Box sx={{ display: { xs: 'none', md: 'flex', gap: '0.5em' } }}>
