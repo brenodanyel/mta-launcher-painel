@@ -3,7 +3,7 @@ import { Fab, Link, Tooltip, Icon } from '@mui/material';
 export function HelpIcon() {
   return (
     <Link
-      href='https://discord.com/invite/xxxxxx'
+      href='https://discord.com/invite/kEZzNRubQK'
       target='_blank'
       color='inherit'
       sx={{
