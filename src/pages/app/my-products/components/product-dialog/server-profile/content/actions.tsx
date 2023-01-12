@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Stack, Typography } from '@mui/material';
+import { Box, Button, Icon, Link, Stack, Tooltip, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { useProductDialogStore } from '../../product-dialog.store';
 import { useServerProfileStore } from '../server-profile.store';
@@ -143,6 +143,17 @@ export function ProductInfoActions() {
                 Delete
               </Button>
             )}
+            <Tooltip title="You can share this link with anyone!" placement='bottom'>
+              <Link
+                color="inherit"
+                href={`https://mta-launcher.com/profile/${formData.ip}/${formData.port}`}
+                target="_blank"
+              >
+                <Button startIcon={<Icon>share</Icon>}>
+                  Profile Page
+                </Button>
+              </Link>
+            </Tooltip>
             <Button
               startIcon={<Icon>edit</Icon>}
               onClick={() => {

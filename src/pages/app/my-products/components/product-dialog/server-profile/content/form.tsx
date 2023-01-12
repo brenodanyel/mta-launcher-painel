@@ -18,7 +18,7 @@ import { useProductDialogStore } from '../../product-dialog.store';
 import { useServerProfileStore } from '../server-profile.store';
 import { FileInput } from '@/components/file-input';
 
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useUsers } from '@/pages/app/my-products/hooks/useUsers';
 

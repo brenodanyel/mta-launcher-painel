@@ -18,7 +18,7 @@ import { Fragment } from 'react';
 type ProductCardProps = {
   productId: string;
   productName: string;
-  productContent: { key: string; value: string; tooltip?: string }[];
+  productContent: { key: string; value: string; tooltip?: string; }[];
   onClickView: () => void;
   onClickEdit: () => void;
 };
