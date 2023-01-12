@@ -93,6 +93,7 @@ export const useServerProfileStore = create<State>((set, get) => ({
     },
     linkUrl(url: string) {
       if (!url) return 'Required';
+      if (!url.startsWith('https://')) return 'Link should start with "https://"';
       if (!validator.isURL(url)) return 'Invalid URL';
     },
     ownerId() {
